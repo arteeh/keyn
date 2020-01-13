@@ -1,0 +1,49 @@
+body
+{
+	font-family: sans-serif;
+	color: black;
+}
+
+.header
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 20px;
+	border: 1px;
+	background: #dddddd;
+}
+
+.main
+{
+	display: flex;
+	flex-wrap: wrap;
+	max-width:1000px;
+	padding:20px;
+	margin:auto;
+}
+
+.footer
+{
+	display: flex;
+	flex-direction: row;
+}
+
+.title
+{
+	font-size: 18px;
+	list-style: none;
+	display: flex;
+	align-items: center;
+}
+
+.nav-links {
+	list-style: none;
+	display: flex;
+}
+
+.nav-item a {
+	display: inline-block;
+	padding: 10px 15px;
+}
