@@ -36,7 +36,40 @@
 	</div>
 	
 	<div class="main">
+		<?php
 		
+		// DB Credentials
+		$servername = "localhost";
+		$username = "phpselect";
+		$password = "ZIbv54wn2LP3WXl9";
+
+		// Connect to keyndb database
+		try
+		{
+			$pdo = new PDO("mysql:host=$servername;dbname=keyndb", $username, $password);
+			// set the PDO error mode to exception
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			print("Connected successfully<br>");
+		}
+		catch(PDOException $e)
+		{
+			echo "Connection failed: " . $e->getMessage();
+		}
+		
+		// Get all names from the games table
+		$stmt = $pdo->prepare("SELECT name FROM game");
+		$stmt->execute();
+		
+		print("\nGames:<br>");
+		
+		while($row = $stmt->fetch())
+		{
+			$name = $row["name"];
+			print($name . "<br>");
+		}
+		
+		$conn = null; 
+		?>
 	</div>
 	
 	<div class="footer">
