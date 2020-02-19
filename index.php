@@ -62,6 +62,9 @@
 	</div>
 
 	<?php
+	
+	/*
+	
 	// DB Credentials
 	$servername = "localhost";
 	$username = "phpselect";
@@ -93,6 +96,9 @@
 	}
 	
 	$conn = null;
+	
+	*/
+	
 	?>
 	
 	<div class="card">
