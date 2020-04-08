@@ -37,10 +37,7 @@
 					<a class="nav-link" href="#">Games</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Forum</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Blog</a>
+					<a class="nav-link" href="#">Mods</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">
