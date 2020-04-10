@@ -4,7 +4,7 @@
 <head>
 <!-- Other -->
 <meta charset="utf-8">
-<title>Keyndb</title>
+<title>Keyndb BETA</title>
 <meta name="description" content="Keyn mod hosting site!">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -32,9 +32,9 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="index.php">
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-			Keyndb
+			Keyndb BETA
 		</a>
-		<button 
+		<button
 			class="navbar-toggler"
 			type="button"
 			data-toggle="collapse"

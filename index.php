@@ -14,81 +14,87 @@
 </div>
 
 <?php
-$dh = opendir("db/games");
+$gameopendir = opendir("db/games");
 $games = array();
 
-while (($item = readdir($dh)) !== false)
+while (($gameid = readdir($gameopendir)) !== false)
 {
-	if (!is_dir($item))
+	if (!is_dir($gameid))
 	{
 		$game = array();
 		
-		$datadir = "db/games/$item/data";
-		$datafile = fopen($datadir, "r");
-		$game['gameid'] = $item;
+		$gamedatadir = "db/games/$gameid/data";
+		$gamedatafile = fopen($gamedatadir, "r");
+		$game['gameid'] = $gameid;
 		
-		$logo = "db/games/$item/logo.webp";
-		$game['logo'] = $logo;
+		$gamelogo = "db/games/$gameid/logo.webp";
+		$game['logo'] = $gamelogo;
 		
-		$name = fgets($datafile);
-		$name = trim($name,"name=");
-		$game['name'] = $name;
+		$gamename = fgets($gamedatafile);
+		$gamename = trim($gamename,"name=");
+		$game['name'] = $gamename;
 		
-		$description = fgets($datafile);
-		$description = trim($description,"description=");
-		$game['description'] = $description;
+		$gamedescription = fgets($gamedatafile);
+		$gamedescription = trim($gamedescription,"description=");
+		$game['description'] = $gamedescription;
 		
-		$modcount = fgets($datafile);
-		$modcount = trim($modcount,"modcount=");
-		$game['modcount'] = $modcount;
+		$gamemodcount = fgets($gamedatafile);
+		$gamemodcount = trim($gamemodcount,"modcount=");
+		$game['modcount'] = $gamemodcount;
 		
-		$downloads = fgets($datafile);
-		$downloads = trim($downloads,"downloads=");
-		$game['downloads'] = $downloads;
+		$gamedownloads = fgets($gamedatafile);
+		$gamedownloads = trim($gamedownloads,"downloads=");
+		$game['downloads'] = $gamedownloads;
 		
 		array_push($games, $game);
 		
-		fclose($datafile);
+		fclose($gamedatafile);
 	}
 }
-closedir($dh);
+closedir($gameopendir);
 
 //sort by downloads, descending
-array_column($item, 'downloads');
-array_multisort($games, SORT_DESC, $item);
+array_column($gameid, 'downloads');
+array_multisort($games, SORT_DESC, $gameid);
 
 $gameslength = count($games);
 
 ?>
 <div class="container-lg">
-<div class="row my-4 p-0">
-<?php
-for($i = 0; $i < $gameslength; $i++)
-{
-?>
-	<a class="game" href="game.php?game=<?php echo $games[$i]['gameid']; ?>" >
-	<div class="card m-1" style="width: 14rem;">
-		<img src="<?php echo $games[$i]['logo']; ?>" class="card-img-top" alt="Game image">
-		<div class="card-body text-dark">
-			<h5 class="card-title ">
-				<?php echo $games[$i]['name']; ?>
-			</h5>
-			<p class="card-text">
-				<?php echo $games[$i]['description']; ?>
-			</p>
-		</div>
-		<div class="card-footer">
-			<small class="text-muted">
-				<?php echo $games[$i]['modcount']; ?> mods, 
-				<?php echo $games[$i]['downloads']; ?> downloads
-			</small>
-		</div>
+	<div class="row my-4 p-0">
+		<?php
+		for($i = 0; $i < $gameslength; $i++)
+		{
+			?>
+			<a class="item" href="game.php?game=<?php echo $games[$i]['gameid']; ?>" >
+				<div class="card m-1" style="width: 14rem;">
+					<img 
+						src="<?php echo $games[$i]['logo']; ?>" 
+						class="card-img-top" 
+						alt="Game image"
+					>
+					<div class="card-body text-dark">
+						<h5 class="card-title ">
+							<?php echo $games[$i]['name']; ?>
+						</h5>
+						<p class="card-text">
+							<?php echo $games[$i]['description']; ?>
+						</p>
+					</div>
+					<div class="card-footer">
+						<small class="text-muted">
+							<?php echo $games[$i]['modcount']; ?>
+							mods, 
+							<?php echo $games[$i]['downloads']; ?>
+							downloads
+						</small>
+					</div>
+				</div>
+			</a>
+		<?php
+		}
+		?>
 	</div>
-	</a>
-<?php
-}
-?>
-</div>
 </div>
 
 <?php require 'bot.php' ?>

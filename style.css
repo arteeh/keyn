@@ -1,12 +1,12 @@
-.game {
+.item {
 	text-decoration: none;
 }
 
-.game:hover {
+.item:hover {
 	text-decoration: none;
 }
 
-.game:visited {
+.item:visited {
 	text-decoration: none;
 }
 
