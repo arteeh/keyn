@@ -1,8 +1,8 @@
 <?php require 'top.php' ?>
 
 <?php
-$gameid = $_GET["game"];
-$modid = $_GET["mod"];
+$gameid = $_GET['game'];
+$modid = $_GET['mod'];
 
 //get game data
 $gamedir = "db/games/$gameid";
@@ -52,8 +52,8 @@ fclose($moddatafile);
 			<li class="nav-item">
 				<a	class="nav-link  
 					<?php
-					if ($_GET[page] == "description" 
-						|| $_GET[page] == "")
+					if ($_GET['page'] == "description" 
+						|| $_GET['page'] == "")
 					{
 						echo "active";
 					}
@@ -67,7 +67,7 @@ fclose($moddatafile);
 			<li class="nav-item">
 				<a	class="nav-link  
 					<?php
-					if ($_GET[page] == "downloads")
+					if ($_GET['page'] == "downloads")
 					{
 						echo "active";
 					}
@@ -81,7 +81,7 @@ fclose($moddatafile);
 			<li class="nav-item">
 				<a	class="nav-link 
 					<?php
-					if ($_GET[page] == "comments")
+					if ($_GET['page'] == "comments")
 					{
 						echo "active";
 					}
@@ -105,7 +105,10 @@ fclose($moddatafile);
 	</div>
 	
 	<?php
-	if ($_GET[page] == "description" || $_GET[page] == "")
+	// Set description as default page to open
+	if(!isset($_GET['page'])) $_GET['page'] = 'description';
+	
+	if ($_GET['page'] == 'description')
 	{
 	?>
 	<div class="card-body">
@@ -132,7 +135,7 @@ fclose($moddatafile);
 	</div>
 	<?php
 	}
-	else if ($_GET[page] == "downloads")
+	else if ($_GET['page'] == "downloads")
 	{
 	?>
 	<div class="card-body">
@@ -142,7 +145,7 @@ fclose($moddatafile);
 	</div>
 	<?php
 	}
-	else if ($_GET[page] == "comments")
+	else if ($_GET['page'] == "comments")
 	{
 	?>
 	<div class="card-body">

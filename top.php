@@ -9,6 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" type="text/css" href="style.css">
 
+<!-- Feather Icons -->
+<script src="https://unpkg.com/feather-icons"></script>
+
 <!-- Bootstrap CSS -->
 <link
 	rel="stylesheet"
@@ -47,9 +50,6 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="index.php">Games</a>
-				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Mods</a>
 				</li>

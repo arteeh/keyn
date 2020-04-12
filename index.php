@@ -54,8 +54,7 @@ while (($gameid = readdir($gameopendir)) !== false)
 closedir($gameopendir);
 
 //sort by downloads, descending
-array_column($gameid, 'downloads');
-array_multisort($games, SORT_DESC, $gameid);
+array_multisort(array_column($games, 'downloads'), SORT_DESC, $games);
 
 $gameslength = count($games);
 

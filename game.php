@@ -1,7 +1,7 @@
 <?php require 'top.php' ?>
 
 <?php
-$gameid = $_GET["game"];
+$gameid = $_GET['game'];
 
 //get game data
 $gamedir = "db/games/$gameid";
@@ -59,12 +59,6 @@ while (($modid = readdir($modopendir)) !== false)
 	}
 }
 closedir($modopendir);
-
-//sort mods by downloads, descending
-array_column($modid, 'downloads');
-array_multisort($mods, SORT_DESC, $modid);
-
-$modslength = count($mods);
 ?>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
@@ -96,13 +90,58 @@ $modslength = count($mods);
 			Next
 		</button>
 	</div>
-	<div class="input-group">
-		<input type="text" class="form-control" placeholder="Search">
-		<button type="button input-group-append" class="btn btn-primary">
-			Search
-		</button>
-	</div>
+	<form class="form-inline" action="game.php" method="get">
+		<div class="form-group">
+			<input type="hidden" name="game" value="<?php echo $gameid; ?>" /> 
+			<input type="text" name="query" class="form-control" placeholder="<3">
+			<button type="submit" class="btn btn-primary ml-1">
+				Search
+			</button>
+		</div>
+	</form>
 </div>
+
+<?php
+$issearching = 0;
+
+if(isset($_GET['query']))
+{
+	if($_GET['query'] != "")
+	{
+		$issearching = 1;
+	}
+}
+
+if($issearching)
+{
+	$hits = array();
+	$query = $_GET['query'];
+	
+	$modsinmods = count($mods);
+	echo $modsinmods;
+	
+	foreach ($mod as $mods)
+	{
+		echo "in foreach, checking ";
+		echo $mod['name'];
+		echo "<br>";
+		if(strpos($mod['name'], $query) !== false)
+		{
+			array_push($hits, $mod);
+			echo "mod pushed: ";
+			echo $mod['name'];
+			echo "<br>";
+		}
+	}
+	$modslength = count($hits);
+}
+else
+{
+	//sort mods by downloads, descending
+	array_multisort(array_column($mods, 'downloads'), SORT_DESC, $mods);
+	$modslength = count($mods);
+}
+?>
 
 <div class="container-lg">
 	<div class="row my-4 p-0">
