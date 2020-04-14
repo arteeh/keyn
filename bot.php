@@ -1,4 +1,4 @@
-	<footer class="card text-center">
+	<footer class="card text-center bg-light">
 		<div class="card-body">
 			<p class="card-text">
 				This website is created and owned by arteeh.

@@ -1,8 +1,51 @@
-<?php require 'top.php' ?>
+<?php 
+require 'top.php';
 
-<div class="jumbotron my-4">
+$gameopendir = opendir("db/games");
+$games = array();
+
+while (($gameid = readdir($gameopendir)) !== false)
+{
+	if (!is_dir($gameid))
+	{
+		$game = array();
+		$game['gameid'] = $gameid;
+		
+		$gamelogo = "db/games/$gameid/logo.webp";
+		$game['logo'] = $gamelogo;
+		
+		$gamedatadir = "db/games/$gameid/data";
+		$gamedatafile = fopen($gamedatadir, "r");
+		
+		while(!feof($gamedatafile))
+		{
+			$line = fgets($gamedatafile);
+			if(strpos($line, 'name=') !== false)
+				$game['name'] = trim($line,"name=");
+			else if(strpos($line, 'description=') !== false)
+				$game['description'] = trim($line,"description=");
+			else if(strpos($line, 'modcount=') !== false)
+				$game['modcount'] = trim($line,"modcount=");
+			else if(strpos($line, 'downloads=') !== false)
+				$game['downloads'] = trim($line,"downloads=");
+		}
+
+		fclose($gamedatafile);
+		
+		array_push($games, $game);
+	}
+}
+closedir($gameopendir);
+
+//sort by downloads, descending
+array_multisort(array_column($games, 'downloads'), SORT_DESC, $games);
+
+$gameslength = count($games);
+?>
+
+<div class="jumbotron bg-light my-4">
 	<h1 class="display-5">
-		Welcome!
+		What's up.
 	</h1>
 	<p class="lead">
 		Keyndb is a website where you can find, upload and download video game mods.
@@ -13,67 +56,21 @@
 	</p>
 </div>
 
-<?php
-$gameopendir = opendir("db/games");
-$games = array();
-
-while (($gameid = readdir($gameopendir)) !== false)
-{
-	if (!is_dir($gameid))
-	{
-		$game = array();
-		
-		$gamedatadir = "db/games/$gameid/data";
-		$gamedatafile = fopen($gamedatadir, "r");
-		$game['gameid'] = $gameid;
-		
-		$gamelogo = "db/games/$gameid/logo.webp";
-		$game['logo'] = $gamelogo;
-		
-		$gamename = fgets($gamedatafile);
-		$gamename = trim($gamename,"name=");
-		$game['name'] = $gamename;
-		
-		$gamedescription = fgets($gamedatafile);
-		$gamedescription = trim($gamedescription,"description=");
-		$game['description'] = $gamedescription;
-		
-		$gamemodcount = fgets($gamedatafile);
-		$gamemodcount = trim($gamemodcount,"modcount=");
-		$game['modcount'] = $gamemodcount;
-		
-		$gamedownloads = fgets($gamedatafile);
-		$gamedownloads = trim($gamedownloads,"downloads=");
-		$game['downloads'] = $gamedownloads;
-		
-		array_push($games, $game);
-		
-		fclose($gamedatafile);
-	}
-}
-closedir($gameopendir);
-
-//sort by downloads, descending
-array_multisort(array_column($games, 'downloads'), SORT_DESC, $games);
-
-$gameslength = count($games);
-
-?>
-<div class="container-lg">
-	<div class="row my-4 p-0">
+<div class="container my-4">
+	<div class="row justify-content-center">
 		<?php
 		for($i = 0; $i < $gameslength; $i++)
 		{
 			?>
 			<a class="item" href="game.php?game=<?php echo $games[$i]['gameid']; ?>" >
-				<div class="card m-1" style="width: 14rem;">
+				<div class="card m-1" style="width: 13.375rem;">
 					<img 
 						src="<?php echo $games[$i]['logo']; ?>" 
-						class="card-img-top" 
+						class="card-img-top img-fluid" 
 						alt="Game image"
 					>
 					<div class="card-body text-dark">
-						<h5 class="card-title ">
+						<h5 class="card-title">
 							<?php echo $games[$i]['name']; ?>
 						</h5>
 						<p class="card-text">

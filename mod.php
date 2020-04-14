@@ -1,35 +1,50 @@
-<?php require 'top.php' ?>
-
 <?php
+// Check if game and mod in GET exist to prevent issues
 $gameid = $_GET['game'];
+$gamedir = "db/games/$gameid";
+if(!is_dir($gamedir))
+{
+	header("Location: error.php");
+	die();
+}
+
 $modid = $_GET['mod'];
+$moddir = "db/games/$gameid/mods/$modid";
+if(!is_dir($moddir))
+{
+	header("Location: error.php");
+	die();
+}
+
+require 'top.php';
 
 //get game data
-$gamedir = "db/games/$gameid";
 $gamedatadir = "$gamedir/data";
-
 $gamedatafile = fopen($gamedatadir, "r");
 $gamename = fgets($gamedatafile);
 $gamename = trim($gamename,"name=");
 fclose($gamedatafile);
 
 //get mod data
-$moddir = "db/games/$gameid/mods/$modid";
 $moddatadir = "$moddir/data";
 $modlogodir = "$moddir/logo.webp";
 $modbannerdir = "$moddir/banner.webp";
 
 $moddatafile = fopen($moddatadir, "r");
-$modname = fgets($moddatafile);
-$modname = trim($modname,"name=");
-$moddescription = fgets($moddatafile);
-$moddescription = trim($moddescription,"description=");
-$moddownloads = fgets($moddatafile);
-$moddownloads = trim($moddownloads,"downloads=");
-$modseeders = fgets($moddatafile);
-$modseeders = trim($modseeders,"seeders=");
-$modleechers = fgets($moddatafile);
-$modleechers = trim($modleechers,"leechers=");
+while(!feof($moddatafile))
+{
+	$line = fgets($moddatafile);
+	if(strpos($line, 'name=') !== false)
+		$modname = trim($line,"name=");
+	else if(strpos($line, 'description=') !== false)
+		$moddescription = trim($line,"description=");
+	else if(strpos($line, 'downloads=') !== false)
+		$moddownloads = trim($line,"downloads=");
+	else if(strpos($line, 'seeders=') !== false)
+		$modseeders = trim($line,"seeders=");
+	else if(strpos($line, 'leechers=') !== false)
+		$modleechers = trim($line,"leechers=");
+}
 fclose($moddatafile);
 ?>
 
@@ -39,7 +54,7 @@ fclose($moddatafile);
 	</a>
 </div>
 
-<div class="card bg-dark text-white my-4 bg-dark">
+<div class="card bg-light text-white my-4">
 	<img class="card-img" src="<?php echo $modbannerdir; ?>" alt="Card image">
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $modname; ?></h2>
