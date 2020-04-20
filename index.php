@@ -44,16 +44,13 @@ $gameslength = count($games);
 ?>
 
 <div class="jumbotron bg-light my-4">
-	<h1 class="display-5">
-		What's up.
-	</h1>
-	<p class="lead">
+	<h2 class="display-5">
 		Keyndb is a website where you can find, upload and download video game mods.
-	</p>
+	</h2>
 	<hr class="my-4">
-	<p>
+	<h5>
 		Rather than downloading the mods directly however, you get a torrent file, which you can use to download the mod using your favourite torrenting software. While this is a small hoop to jump through for you, it has many benefits. For one, download speeds will be very high and will never be artificially limited like on the Nexus. Secondly, this keeps the bandwidth needs for this website low, making it much cheaper to host the site. Because of this, there is no need for ads or subscriptions. This website is still under development, but you can try it out if you want. Enjoy!
-	</p>
+	</h5>
 </div>
 
 <div class="container my-4">

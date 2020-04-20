@@ -97,12 +97,23 @@ if($issearching)
 	}
 	$modslength = count($hits);
 }
-else
+else $modslength = count($mods);
+
+$sortby = "downloads";
+
+if(isset($_GET['sortby']))
 {
-	//sort mods by downloads, descending
-	array_multisort(array_column($mods, 'downloads'), SORT_DESC, $mods);
-	$modslength = count($mods);
+	if($_GET['sortby'] == "")		$sortby = "downloads";
+	if($_GET['sortby'] == "downloads")	$sortby = "downloads";
+	if($_GET['sortby'] == "new")		$sortby = "new";
+	if($_GET['sortby'] == "seeders")		$sortby = "seeders";
+	if($_GET['sortby'] == "updated")		$sortby = "updated";
+	if($_GET['sortby'] == "released")	$sortby = "released";
 }
+
+//sort mods by downloads, descending
+array_multisort(array_column($mods, $sortby), SORT_DESC, SORT_NUMERIC, $mods);
+
 
 // PAGINATION
 
@@ -166,8 +177,7 @@ else
 </div>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<?php require 'pagination.php' ?>
-	<div class="btn-group ml-auto" role="group">
+	<div class="mr-auto">
 		<button type="button" class="text-dark btn btn-light" disabled>
 			Mods: <?php echo $modslength; ?>
 		</button>
@@ -175,16 +185,59 @@ else
 			Downloads: <?php echo $totaldownloads; ?>
 		</button>
 	</div>
+	<div class="btn-group" role="group">
+		<button
+			id="btnGroupDrop1"
+			type="button"
+			class="btn btn-primary dropdown-toggle mr-1"
+			data-toggle="dropdown"
+		>
+			Sort
+		</button>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" href="game.php?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=downloads">
+				Downloads</a>
+			<a class="dropdown-item" href="game.php?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=new">
+				New</a>
+			<a class="dropdown-item" href="game.php?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=seeders">
+				Seeders</a>
+			<a class="dropdown-item" href="game.php?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=updated">
+				Updated</a>
+			<a class="dropdown-item" href="game.php?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=released">
+				Released</a>
+			
+		</div>
+	</div>
 	<form class="form-inline" action="game.php" method="get">
-		<div class="form-group">
-			<input type="hidden" name="game" value="<?php echo $gameid; ?>" /> 
+		<div class="input-group">
 			<input type="text" name="query" class="form-control" placeholder="exact hits please <3">
-			<button type="submit" class="btn btn-primary ml-1">
-				Search
-			</button>
+			<input type="hidden" name="game" value="<?php echo $gameid; ?>"/>
+			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
+			<div class="input-group-append">
+				<button type="submit" class="input-group-text">
+					Search
+				</button>
+			</div>
 		</div>
 	</form>
 </div>
+
+<?php require 'pagination.php' ?>
 
 <div class="container my-4">
 	<div class="row justify-content-center">
@@ -203,10 +256,10 @@ else
 				game=<?php echo $gameid; ?>&
 				mod=<?php echo $mods[$i]['modid']; ?>"
 			>
-				<div class="card m-1" style="width: 14rem;">
-					<img 
-						src="<?php echo $mods[$i]['logo']; ?>" 
-						class="card-img-top" 
+				<div class="card m-1" style="width: 13.375rem;">
+					<img
+						src="<?php echo $mods[$i]['logo']; ?>"
+						class="card-img-top"
 						alt="Mod image"
 					>
 					<div class="card-body text-dark">
@@ -230,8 +283,6 @@ else
 	</div>
 </div>
 
-<div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<?php require 'pagination.php' ?>
-</div>
+<?php require 'pagination.php' ?>
 
 <?php require 'bot.php' ?>

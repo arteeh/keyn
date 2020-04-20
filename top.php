@@ -52,7 +52,16 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Think of buttons to put here!</a>
+					<a class="nav-link" href="
+						https://trello.com/b/C4gNR6Fs/keyndb">
+						Feature requests
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="
+						#">
+						Think of more buttons to put here!
+					</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">

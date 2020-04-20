@@ -1,5 +1,5 @@
-<nav class="m-0 p-0">
-	<ul class="pagination my-auto">
+<nav class="my-4">
+	<ul class="pagination my-auto justify-content-center">
 		<!-- Link of the first page -->
 		<li class='page-item <?php ($page <= 1 ? print 'disabled' : '')?>'>
 			<a class='page-link' href="game.php?
