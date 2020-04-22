@@ -80,7 +80,7 @@ fclose($moddatafile);
 						echo "active";
 					}
 					?>"
-					href="mod.php?game=<?php echo $gameid; ?>
+					href="mod?game=<?php echo $gameid; ?>
 					&mod=<?php echo $modid; ?>
 					&page=description">
 					Description
@@ -94,7 +94,7 @@ fclose($moddatafile);
 						echo "active";
 					}
 					?>"
-					href="mod.php?game=<?php echo $gameid; ?>
+					href="mod?game=<?php echo $gameid; ?>
 					&mod=<?php echo $modid; ?>
 					&page=downloads">
 					Downloads
@@ -108,7 +108,7 @@ fclose($moddatafile);
 						echo "active";
 					}
 					?>"
-					href="mod.php?game=<?php echo $gameid; ?>
+					href="mod?game=<?php echo $gameid; ?>
 					&mod=<?php echo $modid; ?>
 					&page=comments">
 					Comments
@@ -125,26 +125,18 @@ fclose($moddatafile);
 	{
 	?>
 	<div class="card-body">
-		<h5 class="card-title">
-			<?php
-				echo $moddescription;
-			?>
-		</h5>
-		<p class="card-text">
+		<div class="card-text">
 			<?php
 			$moddescriptionfile = fopen("$moddir/bigdescription", "r");
 			
 			while(!feof($moddescriptionfile))
 			{
-				$line = fgets($moddescriptionfile);
-				echo "<p>";
-				echo $line;
-				echo "</p>";
+				echo fgets($moddescriptionfile);
 			}
 			
 			fclose($moddescriptionfile);
 			?>
-		</p>
+		</div>
 	</div>
 	<?php
 	}
