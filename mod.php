@@ -52,6 +52,13 @@ fclose($moddatafile);
 	<a href="game.php?game=<?php echo $gameid; ?>" type="button" class="btn btn-primary">
 		Back to <?php echo $gamename; ?>
 	</a>
+	<span class="my-auto">
+		Downloads: <?php echo $moddownloads; ?>
+		&nbsp
+		Seeders: <?php echo $modseeders; ?>
+		&nbsp
+		Leechers: <?php echo $modleechers; ?>
+	</span>
 </div>
 
 <div class="card bg-light text-white my-4">
@@ -105,15 +112,6 @@ fclose($moddatafile);
 					&mod=<?php echo $modid; ?>
 					&page=comments">
 					Comments
-				</a>
-			</li>
-			<li class="nav-item text-right ml-auto">
-				<a class="nav-link">
-					Downloads: <?php echo $moddownloads; ?>
-					&nbsp
-					Seeders: <?php echo $modseeders; ?>
-					&nbsp
-					Leechers: <?php echo $modleechers; ?>
 				</a>
 			</li>
 		</ul>

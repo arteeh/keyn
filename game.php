@@ -4,7 +4,7 @@ $gameid = $_GET['game'];
 $gamedir = "db/games/$gameid";
 if(!is_dir($gamedir))
 {
-	header("Location: error.php");
+	header("Location: error");
 	die();
 }
 
@@ -166,9 +166,14 @@ else
 	<a href="index.php" type="button" class="btn btn-primary">
 		Back home
 	</a>
+	<span class="my-auto">
+		Mods: <?php echo $modslength; ?>
+		&nbsp
+		Downloads: <?php echo $totaldownloads; ?>
+	</span>
 </div>
 
-<div class="card bg-light text-white my-4">
+<div class="card text-white my-4">
 	<img class="card-img" src="<?php echo $gamebannerdir; ?>" alt="Card image">
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $gamename; ?></h2>
@@ -177,40 +182,38 @@ else
 </div>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<div class="mr-auto">
-		<button type="button" class="text-dark btn btn-light" disabled>
-			Mods: <?php echo $modslength; ?>
-		</button>
-		<button type="button" class="text-dark btn btn-light" disabled>
-			Downloads: <?php echo $totaldownloads; ?>
-		</button>
-	</div>
 	<div class="btn-group" role="group">
 		<button
-			id="btnGroupDrop1"
 			type="button"
 			class="btn btn-primary dropdown-toggle mr-1"
-			data-toggle="dropdown"
-		>
+			data-toggle="dropdown">
 			Sort
 		</button>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" href="game.php?
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == downloads) echo "active" ?>"
+				href="game?
 				game=<?php echo $gameid; ?>&
 				query=<?php echo $query; ?>&
 				sortby=downloads">
 				Downloads</a>
-			<a class="dropdown-item" href="game.php?
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == seeders) echo "active" ?>"
+				href="game?
 				game=<?php echo $gameid; ?>&
 				query=<?php echo $query; ?>&
 				sortby=seeders">
 				Seeders</a>
-			<a class="dropdown-item" href="game.php?
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == updated) echo "active" ?>"
+				href="game?
 				game=<?php echo $gameid; ?>&
 				query=<?php echo $query; ?>&
 				sortby=updated">
 				Updated</a>
-			<a class="dropdown-item" href="game.php?
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == released) echo "active" ?>"
+				href="game?
 				game=<?php echo $gameid; ?>&
 				query=<?php echo $query; ?>&
 				sortby=released">
@@ -220,11 +223,16 @@ else
 	</div>
 	<form class="form-inline" action="game.php" method="get">
 		<div class="input-group">
-			<input type="text" name="query" class="form-control" placeholder="exact hits please <3">
+			<input	type="text"
+				name="query"
+				class="form-control"
+				value="<?php echo $query; ?>"
+				placeholder="exact hits please <3">
 			<input type="hidden" name="game" value="<?php echo $gameid; ?>"/>
 			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
 			<div class="input-group-append">
-				<button type="submit" class="input-group-text">
+				<button	type="submit"
+					class="btn btn-primary input-group-text">
 					Search
 				</button>
 			</div>
@@ -232,7 +240,7 @@ else
 	</form>
 </div>
 
-<?php require 'pagination.php' ?>
+<?php if($modslength > $limit) require 'pagination.php'; ?>
 
 <div class="container my-4">
 	<div class="row justify-content-center">
@@ -247,7 +255,7 @@ else
 		?>
 			<a
 				class="item" 
-				href="mod.php?
+				href="mod?
 				game=<?php echo $gameid; ?>&
 				mod=<?php echo $mods[$i]['modid']; ?>"
 			>
@@ -278,6 +286,6 @@ else
 	</div>
 </div>
 
-<?php require 'pagination.php' ?>
+<?php if($modslength > $limit) require 'pagination.php'; ?>
 
-<?php require 'bot.php' ?>
+<?php require 'bot.php'; ?>

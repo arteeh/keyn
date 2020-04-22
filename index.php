@@ -43,7 +43,7 @@ array_multisort(array_column($games, 'downloads'), SORT_DESC, $games);
 $gameslength = count($games);
 ?>
 
-<div class="jumbotron bg-light my-4">
+<div class="jumbotron my-4">
 	<h2 class="display-5">
 		Keyndb is a website where you can find, upload and download video game mods.
 	</h2>
@@ -59,14 +59,14 @@ $gameslength = count($games);
 		for($i = 0; $i < $gameslength; $i++)
 		{
 			?>
-			<a class="item" href="game.php?game=<?php echo $games[$i]['gameid']; ?>" >
-				<div class="card m-1" style="width: 13.375rem;">
+			<a class="item" href="game?game=<?php echo $games[$i]['gameid']; ?>" >
+				<div class="card text-dark m-1" style="width: 13.375rem;">
 					<img 
 						src="<?php echo $games[$i]['logo']; ?>" 
 						class="card-img-top img-fluid" 
 						alt="Game image"
 					>
-					<div class="card-body text-dark">
+					<div class="card-body">
 						<h5 class="card-title">
 							<?php echo $games[$i]['name']; ?>
 						</h5>

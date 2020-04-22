@@ -83,7 +83,7 @@ function testinput($data)
 
 <div class="jumbotron my-4">
 	<h1 class="display-5">
-		Register an account
+		Create an account
 	</h1>
 	
 	<form	class="my-4"
@@ -109,7 +109,7 @@ function testinput($data)
 				placeholder="Email"
 			>
 			<small class="form-text text-muted">
-				This is only for verification and password resets.
+				This is just for verification and password resets.
 			</small>
 			<?php echo $emailerror;?>
 		</div>
@@ -139,7 +139,7 @@ function testinput($data)
 	<?php	
 	if($willcreate == 1)
 	{
-		$subject = "HTML email";
+		$subject = "Verify your Keyndb account";
 		$message = '<html><head>
 			<title>Verify your Keyndb account</title>
 			</head><body><h3>
@@ -151,7 +151,7 @@ function testinput($data)
 		// Always set content-type when sending HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-		$headers .= 'From: <webmaster@example.com>' . "\r\n";
+		$headers .= 'From: Keyndb <noreply@keyndb.com>' . "\r\n";
 	
 		mail($email,$subject,$message,$headers);
 		echo "<h5>A verification email has just been sent to $email. Click the link in there to verify your account.</h5>";
