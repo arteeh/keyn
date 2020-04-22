@@ -99,19 +99,19 @@ if($issearching)
 }
 else $modslength = count($mods);
 
-$sortby = "downloads";
 
+// SORT MODS
+
+$sortby = "downloads";
 if(isset($_GET['sortby']))
 {
 	if($_GET['sortby'] == "")		$sortby = "downloads";
 	if($_GET['sortby'] == "downloads")	$sortby = "downloads";
-	if($_GET['sortby'] == "new")		$sortby = "new";
 	if($_GET['sortby'] == "seeders")		$sortby = "seeders";
 	if($_GET['sortby'] == "updated")		$sortby = "updated";
 	if($_GET['sortby'] == "released")	$sortby = "released";
 }
-
-//sort mods by downloads, descending
+//sort mods by selected sort get
 array_multisort(array_column($mods, $sortby), SORT_DESC, SORT_NUMERIC, $mods);
 
 
@@ -200,11 +200,6 @@ else
 				query=<?php echo $query; ?>&
 				sortby=downloads">
 				Downloads</a>
-			<a class="dropdown-item" href="game.php?
-				game=<?php echo $gameid; ?>&
-				query=<?php echo $query; ?>&
-				sortby=new">
-				New</a>
 			<a class="dropdown-item" href="game.php?
 				game=<?php echo $gameid; ?>&
 				query=<?php echo $query; ?>&

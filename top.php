@@ -53,7 +53,7 @@
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="
-						https://trello.com/b/C4gNR6Fs/keyndb">
+						https://trello.com/b/C4gNR6Fs">
 						Feature requests
 					</a>
 				</li>
@@ -69,7 +69,9 @@
 					<a class="nav-link" href="#">Log in</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Register</a>
+					<a class="nav-link" href="
+					register.php">
+					Register</a>
 				</li>
 			</ul>
 		</div>
