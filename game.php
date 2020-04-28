@@ -4,7 +4,7 @@ $gameid = $_GET['game'];
 $gamedir = "db/games/$gameid";
 if(!is_dir($gamedir))
 {
-	header("Location: error.php");
+	header("Location: error");
 	die();
 }
 
@@ -97,12 +97,23 @@ if($issearching)
 	}
 	$modslength = count($hits);
 }
-else
+else $modslength = count($mods);
+
+
+// SORT MODS
+
+$sortby = "downloads";
+if(isset($_GET['sortby']))
 {
-	//sort mods by downloads, descending
-	array_multisort(array_column($mods, 'downloads'), SORT_DESC, $mods);
-	$modslength = count($mods);
+	if($_GET['sortby'] == "")		$sortby = "downloads";
+	if($_GET['sortby'] == "downloads")	$sortby = "downloads";
+	if($_GET['sortby'] == "seeders")		$sortby = "seeders";
+	if($_GET['sortby'] == "updated")		$sortby = "updated";
+	if($_GET['sortby'] == "released")	$sortby = "released";
 }
+//sort mods by selected sort get
+array_multisort(array_column($mods, $sortby), SORT_DESC, SORT_NUMERIC, $mods);
+
 
 // PAGINATION
 
@@ -155,9 +166,14 @@ else
 	<a href="index.php" type="button" class="btn btn-primary">
 		Back home
 	</a>
+	<span class="my-auto">
+		Mods: <?php echo $modslength; ?>
+		&nbsp
+		Downloads: <?php echo $totaldownloads; ?>
+	</span>
 </div>
 
-<div class="card bg-light text-white my-4">
+<div class="card text-white my-4">
 	<img class="card-img" src="<?php echo $gamebannerdir; ?>" alt="Card image">
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $gamename; ?></h2>
@@ -166,25 +182,65 @@ else
 </div>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<?php require 'pagination.php' ?>
-	<div class="btn-group ml-auto" role="group">
-		<button type="button" class="text-dark btn btn-light" disabled>
-			Mods: <?php echo $modslength; ?>
+	<div class="btn-group" role="group">
+		<button
+			type="button"
+			class="btn btn-primary dropdown-toggle mr-1"
+			data-toggle="dropdown">
+			Sort
 		</button>
-		<button type="button" class="text-dark btn btn-light" disabled>
-			Downloads: <?php echo $totaldownloads; ?>
-		</button>
+		<div class="dropdown-menu">
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == downloads) echo "active" ?>"
+				href="game?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=downloads">
+				Downloads</a>
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == seeders) echo "active" ?>"
+				href="game?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=seeders">
+				Seeders</a>
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == updated) echo "active" ?>"
+				href="game?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=updated">
+				Updated</a>
+			<a	class="dropdown-item
+				<?php if ($_GET['sortby'] == released) echo "active" ?>"
+				href="game?
+				game=<?php echo $gameid; ?>&
+				query=<?php echo $query; ?>&
+				sortby=released">
+				Released</a>
+			
+		</div>
 	</div>
 	<form class="form-inline" action="game.php" method="get">
-		<div class="form-group">
-			<input type="hidden" name="game" value="<?php echo $gameid; ?>" /> 
-			<input type="text" name="query" class="form-control" placeholder="exact hits please <3">
-			<button type="submit" class="btn btn-primary ml-1">
-				Search
-			</button>
+		<div class="input-group">
+			<input	type="text"
+				name="query"
+				class="form-control"
+				value="<?php echo $query; ?>"
+				placeholder="exact hits please <3">
+			<input type="hidden" name="game" value="<?php echo $gameid; ?>"/>
+			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
+			<div class="input-group-append">
+				<button	type="submit"
+					class="btn btn-primary input-group-text">
+					Search
+				</button>
+			</div>
 		</div>
 	</form>
 </div>
+
+<?php if($modslength > $limit) require 'pagination.php'; ?>
 
 <div class="container my-4">
 	<div class="row justify-content-center">
@@ -199,14 +255,14 @@ else
 		?>
 			<a
 				class="item" 
-				href="mod.php?
+				href="mod?
 				game=<?php echo $gameid; ?>&
 				mod=<?php echo $mods[$i]['modid']; ?>"
 			>
-				<div class="card m-1" style="width: 14rem;">
-					<img 
-						src="<?php echo $mods[$i]['logo']; ?>" 
-						class="card-img-top" 
+				<div class="card m-1" style="width: 13.375rem;">
+					<img
+						src="<?php echo $mods[$i]['logo']; ?>"
+						class="card-img-top"
 						alt="Mod image"
 					>
 					<div class="card-body text-dark">
@@ -230,8 +286,6 @@ else
 	</div>
 </div>
 
-<div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<?php require 'pagination.php' ?>
-</div>
+<?php if($modslength > $limit) require 'pagination.php'; ?>
 
-<?php require 'bot.php' ?>
+<?php require 'bot.php'; ?>

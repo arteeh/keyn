@@ -33,8 +33,8 @@
 <body>
 
 <div class="container-lg">
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="index.php">
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<a class="navbar-brand" href="https://www.keyndb.com">
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			Keyndb BETA
 		</a>
@@ -52,7 +52,16 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Think of buttons to put here!</a>
+					<a class="nav-link" href="
+						https://trello.com/b/C4gNR6Fs">
+						Feature requests
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="
+						#">
+						Think of more buttons to put here!
+					</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">
@@ -60,7 +69,9 @@
 					<a class="nav-link" href="#">Log in</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Register</a>
+					<a class="nav-link" href="
+					register.php">
+					Register</a>
 				</li>
 			</ul>
 		</div>

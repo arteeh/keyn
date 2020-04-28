@@ -1,16 +1,24 @@
+.black
+{
+	background-color: #000000;
+}
 
-.item {
+.item
+{
 	text-decoration: none;
 }
 
-.item:hover {
+.item:hover
+{
 	text-decoration: none;
 }
 
-.item:visited {
+.item:visited
+{
 	text-decoration: none;
 }
 
-.text-shadow {
+.text-shadow
+{
 	 text-shadow: 0 0 5px #000000;
 }
