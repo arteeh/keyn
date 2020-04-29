@@ -8,7 +8,7 @@ require 'top-cache.php';
 <head>
 	<!-- Other -->
 	<meta charset="utf-8">
-	<title>Keyndb BETA</title>
+	<title>Keyndb ALPHA</title>
 	<meta name="description" content="Keyn mod hosting site!">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -38,9 +38,9 @@ require 'top-cache.php';
 
 <div class="container-lg">
 	<nav class="navbar navbar-expand-lg navbar-light">
-		<a class="navbar-brand" href="https://keyndb.com">
+		<a class="navbar-brand" href="index">
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-			Keyndb BETA
+			Keyndb ALPHA
 		</a>
 		<button
 			class="navbar-toggler"
