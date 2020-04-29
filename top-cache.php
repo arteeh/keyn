@@ -3,7 +3,7 @@
 $url = $_SERVER["SCRIPT_NAME"];
 $break = Explode('/', $url);
 $file = $break[count($break) - 1];
-$cachefile = 'cache/cached-'.substr_replace($file ,"",-4).'.php';
+$cachefile = '/cache/cached-'.substr_replace($file ,"",-4).'.php';
 $cachetime = 18000;
 
 echo "url: $url<br>";
