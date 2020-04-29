@@ -12,6 +12,10 @@ if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
 	readfile($cachefile);
 	exit;
 }
+else
+{
+	echo "<!-- Not cached ".date('H:i', filemtime($cachefile))." -->\n";
+}
 
 ob_start(); // Start the output buffer
 ?>
