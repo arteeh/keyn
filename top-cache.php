@@ -24,7 +24,6 @@ if (file_exists($cachefile))
 		exit;
 	}
 }
-	
 else
 {
 	echo "Not cached. File: $file<br>";
