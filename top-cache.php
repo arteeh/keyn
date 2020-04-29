@@ -24,7 +24,7 @@ if (file_exists($cachefile))
 {
 	if(time() - $cachetime < filemtime($cachefile))
 	{
-		echo "<!-- Cached page, generated $cachefile on " . date('H:i', filemtime($cachefile)). " -->";
+		echo "<!-- Cached page, generated at " . date('H:i', filemtime($cachefile)). " -->";
 		readfile($cachefile);
 		exit;
 	}
