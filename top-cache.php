@@ -15,7 +15,7 @@ echo "if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)
 echo "if (" . file_exists($cachefile) . " && " . time() . " - $cachetime " . " < " . filemtime($cachefile) . ")<br>";
 
 // Serve from the cache if it is younger than $cachetime
-if (file_exists($cachefile)
+if (file_exists($cachefile))
 {
 	if(time() - $cachetime < filemtime($cachefile))
 	{
