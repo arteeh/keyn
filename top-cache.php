@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 $url = $_SERVER["SCRIPT_NAME"];
 $break = Explode('/', $url);
 $file = $break[count($break) - 1];
@@ -17,12 +15,16 @@ echo "if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)
 echo "if (" . file_exists($cachefile) . " && " . time() . " - $cachetime " . " < " . filemtime($cachefile) . ")<br>";
 
 // Serve from the cache if it is younger than $cachetime
-if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile))
+if (file_exists($cachefile)
 {
-	echo "Cached copy, generated " . date('H:i', filemtime($cachefile)). "<br>";
-	readfile($cachefile);
-	exit;
+	if(time() - $cachetime < filemtime($cachefile))
+	{
+		echo "Cached copy, generated " . date('H:i', filemtime($cachefile)). "<br>";
+		readfile($cachefile);
+		exit;
+	}
 }
+	
 else
 {
 	echo "Not cached. File: $file<br>";
