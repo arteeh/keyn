@@ -1,3 +1,7 @@
+<?php
+require 'top-cache.php';
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -34,7 +38,7 @@
 
 <div class="container-lg">
 	<nav class="navbar navbar-expand-lg navbar-light">
-		<a class="navbar-brand" href="https://www.keyndb.com">
+		<a class="navbar-brand" href="https://keyndb.com">
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			Keyndb BETA
 		</a>
