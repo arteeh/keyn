@@ -136,7 +136,13 @@ function testinput($data)
 		</button>
 	</form>
 	
-	<?php	
+	<?php
+	
+	// Hash the username
+	// Hash the password
+	// Hash the email address
+	// Add the user to the database with verified=0
+	
 	if($willcreate == 1)
 	{
 		$subject = "Verify your Keyndb account";
@@ -148,6 +154,7 @@ function testinput($data)
 			 to verify your account.
 			</h3></body></html>
 		';
+		
 		// Always set content-type when sending HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
