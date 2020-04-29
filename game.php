@@ -75,6 +75,7 @@ while (($modid = readdir($modopendir)) !== false)
 closedir($modopendir);
 
 $issearching = 0;
+$query = "";
 if(isset($_GET['query']))
 {
 	if($_GET['query'] != "")
@@ -226,7 +227,7 @@ else
 			<input	type="text"
 				name="query"
 				class="form-control"
-				value="<?php echo $query; ?>"
+				value="<?php if(($query !== "")) echo $query; ?>"
 				placeholder="exact hits please <3">
 			<input type="hidden" name="game" value="<?php echo $gameid; ?>"/>
 			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
