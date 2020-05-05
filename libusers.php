@@ -1,10 +1,9 @@
 <?php
 
-$dbdir = 'db';
-$userdbdir = "$dbdir/user";
-
 function createuser($username, $email, $password)
 {
+	$userdbdir = "db/user";
+
 	echo "createuser(): entering<br>";
 	$usernamehash = hash("sha256", $username);
 	$emailhash = hash("sha256", $email);
@@ -46,6 +45,8 @@ function verifyuser($username, $token)
 	echo "verifyuser(): entering<br>";
 	
 	$retval = 0;
+	
+	$userdbdir = "db/user";
 	
 	//sha256 hash the username and compare to the token to see if its all good
 	$comparetoken = hash('sha256', $username);
