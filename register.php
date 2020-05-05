@@ -17,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	else
 	{
 		$username = testinput($_POST["username"]);
-		if (!preg_match("/^[a-z\d_]{2,20}$/",$username))
+		if (!preg_match("/^[A-z\d_]{2,30}$/",$username))
 		{
-			$usernameerror = "Only letters and numbers are allowed.";
+			$usernameerror = "Only letters and numbers are allowed. Username should be between 2 and 30 characters as well.";
 			$willcreate = 0;
 		}
 		
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	else
 	{
 		$password = testinput($_POST["password"]);
-		if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,50}$/', $password))
+		if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z]{8,72}$/', $password))
 		{
 			$passworderror = "Your password needs to be at least 8 characters and has to contain at least 1 letter and 1 number.";
 			$willcreate = 0;
