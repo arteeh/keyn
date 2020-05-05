@@ -36,7 +36,7 @@ function replacestringinfile($filename, $toreplace, $replacewith)
 function verifyuser($username, $token)
 {
 	$retval = 0;
-	
+	/*
 	$userdbdir = "db/user";
 	
 	//sha256 hash the username and compare to the token to see if its all good
@@ -72,7 +72,7 @@ function verifyuser($username, $token)
 		else echo "verifyuser(): not a dir";
 	}
 	else echo "verifyuser(): hash incorrect";
-	
+	*/
 	return $retval;
 }
 

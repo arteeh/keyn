@@ -27,4 +27,4 @@ require 'top.php';
 	</h1>
 </div>
 
-<?php require 'bot.php' ?>
+<?php require 'bot.php'; ?>
