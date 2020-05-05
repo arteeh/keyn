@@ -1,13 +1,8 @@
 <?php
 
 function createuser($username, $email, $password)
-{
-
-	echo "user: " . exec('whoami') . "<br>";
-	
+{	
 	$userdbdir = "db/user";
-
-	echo "createuser(): entering<br>";
 	$usernamehash = hash("sha256", $username);
 	$emailhash = hash("sha256", $email);
 	$passwordhash = password_hash($password, PASSWORD_BCRYPT);
@@ -17,42 +12,29 @@ function createuser($username, $email, $password)
 	$useravatarpathplaceholder = "$userdbdir/placeholderuser/avatar.webp";
 	$useravatarpath = "$userdir/avatar.webp";
 	
-	echo "createuser(): creating directory $userdir<br>";
-	if(mkdir($userdir) == FALSE) echo "mkdir failed<br>";
+	mkdir($userdir);
 	
-	echo "createuser(): copying avatar 
-	$useravatarpathplaceholder to $useravatarpath<br>";
-	if(copy($useravatarpathplaceholder, $useravatarpath) == TRUE)
-		echo "copy success<br>";
+	copy($useravatarpathplaceholder, $useravatarpath);
 	
-	echo "userdatapath: " . $userdatapath . "<br>";
-	echo "createuser(): fopen<br>";
 	$datafile = fopen($userdatapath, 'w');
-	if($datafile == FALSE)
-		echo "fopen failed<br>";
+
 	fwrite($datafile, "username=$usernamehash\n");
 	fwrite($datafile, "email=$emailhash\n");
 	fwrite($datafile, "password=$passwordhash\n");
 	fwrite($datafile, "verified=0\n");
 	fclose($datafile);
-	
-	echo "createuser(): leaving<br>";
 }
 
 function replacestringinfile($filename, $toreplace, $replacewith)
 {
-	echo "replacestringinfile(): entering<br>";
 	$content=file_get_contents($filename);
 	$contentchunks=explode($toreplace, $content);
 	$content=implode($replacewith, $contentchunks);
 	file_put_contents($filename, $content);
-	echo "replacestringinfile(): leaving<br>";
 }
 
 function verifyuser($username, $token)
 {
-	echo "verifyuser(): entering<br>";
-	
 	$retval = 0;
 	
 	$userdbdir = "db/user";
@@ -91,7 +73,6 @@ function verifyuser($username, $token)
 	}
 	else echo "verifyuser(): hash incorrect";
 	
-	echo "verifyuser(): entering<br>";
 	return $retval;
 }
 

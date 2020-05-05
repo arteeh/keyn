@@ -1,5 +1,7 @@
 <?php
 
+require 'libusers.php';
+
 // Check if the getters exist, otherwise error
 if(!isset($_GET['username']) || !isset($_GET['token']))
 {
@@ -12,7 +14,7 @@ $token = $_GET['token'];
 
 $status = verifyuser($username, $token);
 
-require 'top.php' 
+require 'top.php';
 
 ?>
 

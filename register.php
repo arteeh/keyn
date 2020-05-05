@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		}
 		
 		//check if username already exists
-		$usernamehashed = hash("sha512", $username);
+		$usernamehashed = hash("sha256", $username);
 		if(is_dir("db/user/$usernamehashed"))
 		{
 			$usernameerror = "This username is already taken.";
