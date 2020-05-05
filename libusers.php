@@ -51,17 +51,18 @@ function verifyuser($username, $token)
 			$isverified = 2;
 			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
-			
+			/*
 			while(!feof($datafile))
 			{
-				/*
+				
 				$line = fgets($datafile);
 				if(strpos($line, 'verified=') !== false)
 				{
 					$isverified = intval(trim($line,"verified="));
 				}
-				*/
+				
 			}
+			*/
 			fclose($datafile);
 			
 			if($isverified == 0)
