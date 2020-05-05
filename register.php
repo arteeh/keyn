@@ -166,7 +166,9 @@ function testinput($data)
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		$headers .= 'From: Keyndb <noreply@keyndb.com>' . "\r\n";
 	
-		echo mail($email,$subject,$message,$headers);
+		$mailsuccess = mail($email,$subject,$message,$headers);
+		if (!$mailsuccess) echo error_get_last()['message'];
+
 		echo "<h5>A verification email has just been sent to $email. Click the link in there to verify your account.</h5>";
 	}
 	?>
