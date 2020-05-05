@@ -146,30 +146,18 @@ function testinput($data)
 		$token = hash('sha256', $username);
 		
 		$subject = "Verify your Keyndb account";
-		$message = '
-		<html>
-		<head>
-		<title>Verify your Keyndb account</title>
-		</head>
-		<body>
-		<h3>
-		Hi ' . $username . ', click 
-		<a href="https://www.keyndb.com/verify?user=' .
-		$username . '&token=' . $token . '>
-		here 
-		</a>
-		to verify your account.
-		</h3>
-		</body>
-		</html>
-		';
+		$message = '<html><head><title>Verify your Keyndb account</title>
+			</head><body><h3>Hi $username, click 
+			<a href="https://www.keyndb.com/verify?
+			user=$username&token=$token> here </a>
+			to verify your account.</h3></body></html>';
 		
 		// Headers for HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		$headers .= 'From: Keyndb <noreply@keyndb.com>' . "\r\n";
 	
-		mail($email,$subject,$message,$headers);
+		echo mail($email,$subject,$message,$headers);
 		echo "<h5>A verification email has just been sent to $email. Click the link in there to verify your account.</h5>";
 	}
 	?>
