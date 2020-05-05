@@ -15,12 +15,16 @@ function createuser($username, $email, $password)
 	$useravatarpath = "$userdir/avatar.webp";
 	
 	echo "createuser(): creating directory $userdir<br>";
-	echo mkdir($userdir) . "<br>";
+	if(mkdir($userdir) == TRUE) echo "mkdir success<br>";
+	
 	echo "createuser(): copying avatar<br>";
-	copy($useravatarpathplaceholder, $useravatarpath);
+	if(copy($useravatarpathplaceholder, $useravatarpath) == TRUE)
+		echo "copy success<br>";
 	
 	echo "createuser(): writing data to data file<br>";
 	$datafile = fopen($userdatapath, 'w');
+	if($datafile == FALSE)
+		echo "fopen failed<br>";
 	fwrite($datafile, "username=$usernamehash\n");
 	fwrite($datafile, "email=$emailhash\n");
 	fwrite($datafile, "password=$passwordhash\n");
