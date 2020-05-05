@@ -50,6 +50,8 @@ function verifyuser($username, $token)
 		{
 			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
+			$isverified = 2;
+			/*
 			while(!feof($datafile))
 			{
 				$line = fgets($datafile);
@@ -57,8 +59,7 @@ function verifyuser($username, $token)
 					$isverified = trim($line,"verified=");
 			}
 			fclose($datapath);
-			
-			/*
+			*/
 			if($isverified == '0')
 			{
 				replacestringinfile($datapath,
@@ -69,7 +70,6 @@ function verifyuser($username, $token)
 			}
 			else if ($isverified == '1')
 				echo "verifyuser(): already verified";
-			*/
 		}
 		else echo "verifyuser(): not a dir";
 	}
