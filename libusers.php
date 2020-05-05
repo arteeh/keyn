@@ -50,6 +50,7 @@ function verifyuser($username, $token)
 		{
 			$isverified = 2;
 			$datapath = "$userdir/data";
+			echo "datapath: " . $datapath . "<br>";
 			$datafile = fopen($datapath);
 			/*
 			while(!feof($datafile))
