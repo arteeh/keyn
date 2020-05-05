@@ -1,4 +1,5 @@
 <?php
+
 require 'top.php';
 require 'libusers.php';
 
@@ -19,6 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		if (!preg_match("/^[a-z\d_]{2,20}$/",$username))
 		{
 			$usernameerror = "Only letters and numbers are allowed.";
+			$willcreate = 0;
+		}
+		
+		//check if username already exists
+		$usernamehashed = hash("sha512", $username);
+		if(is_dir("db/user/$usernamehashed"))
+		{
+			$usernameerror = "This username is already taken.";
 			$willcreate = 0;
 		}
 	}

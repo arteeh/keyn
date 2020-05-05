@@ -2,6 +2,9 @@
 
 function createuser($username, $email, $password)
 {
+
+	echo "user: " . exec('whoami') . "<br>";
+	
 	$userdbdir = "db/user";
 
 	echo "createuser(): entering<br>";
@@ -17,7 +20,8 @@ function createuser($username, $email, $password)
 	echo "createuser(): creating directory $userdir<br>";
 	if(mkdir($userdir) == FALSE) echo "mkdir failed<br>";
 	
-	echo "createuser(): copying avatar<br>";
+	echo "createuser(): copying avatar 
+	$useravatarpathplaceholder to $useravatarpath<br>";
 	if(copy($useravatarpathplaceholder, $useravatarpath) == TRUE)
 		echo "copy success<br>";
 	
