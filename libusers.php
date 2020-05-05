@@ -48,19 +48,21 @@ function verifyuser($username, $token)
 		//check if the user exists
 		if(is_dir($userdir))
 		{
+			$isverified = 2;
 			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
-			$isverified = 2;
 			
 			while(!feof($datafile))
 			{
 				$line = fgets($datafile);
 				if(strpos($line, 'verified=') !== false)
-					$isverified = trim($line,"verified=");
+				{
+					//$isverified = intval(trim($line,"verified="));
+				}
 			}
 			fclose($datafile);
 			
-			if($isverified == '0')
+			if($isverified == 0)
 			{
 				replacestringinfile($datapath,
 					"verified=0",
@@ -68,7 +70,7 @@ function verifyuser($username, $token)
 				echo "verifyuser(): verified";
 				$retval = 1;
 			}
-			else if ($isverified == '1')
+			else if ($isverified == 1)
 				echo "verifyuser(): already verified";
 		}
 		else echo "verifyuser(): not a dir";
