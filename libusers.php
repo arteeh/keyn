@@ -49,26 +49,25 @@ function verifyuser($username, $token)
 		if(is_dir($userdir))
 		{
 			$isverified = 2;
-			$datapath = "$userdir/data";
-			echo "datapath: " . $datapath . "<br>";
-			$datafile = fopen($datapath);
-			/*
-			while(!feof($datafile))
+			$userdatapath = "$userdir/data";
+			echo "datapath: " . $userdatapath . "<br>";
+			$userdatafile = fopen($userdatapath);
+			
+			while(!feof($userdatafile))
 			{
-				
+				/*
 				$line = fgets($datafile);
 				if(strpos($line, 'verified=') !== false)
 				{
 					$isverified = intval(trim($line,"verified="));
 				}
-				
+				*/
 			}
-			*/
-			fclose($datafile);
+			fclose($userdatafile);
 			
 			if($isverified == 0)
 			{
-				replacestringinfile($datapath,
+				replacestringinfile($userdatapath,
 					"verified=0",
 					"verified=1");
 				echo "verifyuser(): verified";
