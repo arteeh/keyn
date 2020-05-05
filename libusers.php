@@ -21,7 +21,8 @@ function createuser($username, $email, $password)
 	if(copy($useravatarpathplaceholder, $useravatarpath) == TRUE)
 		echo "copy success<br>";
 	
-	echo "createuser(): writing data to data file<br>";
+	echo "userdatapath: " . $userdatapath;
+	echo "createuser(): fopen<br>";
 	$datafile = fopen($userdatapath, 'w');
 	if($datafile == FALSE)
 		echo "fopen failed<br>";
