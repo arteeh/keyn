@@ -41,7 +41,6 @@ function verifyuser($username, $token)
 	
 	//sha256 hash the username and compare to the token to see if its all good
 	$comparetoken = hash('sha256', $username);
-	/*
 	if(hash_equals($token, $comparetoken))
 	{
 		$userdir = "$userdbdir/$token";
@@ -49,6 +48,7 @@ function verifyuser($username, $token)
 		//check if the user exists
 		if(is_dir($userdir))
 		{
+			/*
 			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
 			while(!feof($datafile))
@@ -69,11 +69,12 @@ function verifyuser($username, $token)
 			}
 			else if ($isverified == '1')
 				echo "verifyuser(): already verified";
+			*/
 		}
 		else echo "verifyuser(): not a dir";
 	}
 	else echo "verifyuser(): hash incorrect";
-	*/
+	
 	return $retval;
 }
 
