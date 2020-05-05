@@ -48,7 +48,6 @@ function verifyuser($username, $token)
 		//check if the user exists
 		if(is_dir($userdir))
 		{
-			/*
 			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
 			while(!feof($datafile))
@@ -59,6 +58,7 @@ function verifyuser($username, $token)
 			}
 			fclose($datapath);
 			
+			/*
 			if($isverified == '0')
 			{
 				replacestringinfile($datapath,
