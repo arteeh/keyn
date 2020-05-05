@@ -4,6 +4,7 @@ $break = Explode('/', $url);
 $file = $break[count($break) - 1];
 $dontcache = 0;
 if(	$file == "register.php"	||
+	$file == "verify.php"	||
 	$file == "login.php"	)
 	$dontcache = 1;
 

@@ -50,19 +50,15 @@ function verifyuser($username, $token)
 		{
 			$isverified = 2;
 			$userdatapath = "$userdir/data";
-			echo "datapath: " . $userdatapath . "<br>";
-			$userdatafile = fopen($userdatapath);
+			$userdatafile = fopen($userdatapath, "r");
 			
 			while(!feof($userdatafile))
 			{
-				/*
-				$line = fgets($datafile);
+				$line = fgets($userdatafile);
 				if(strpos($line, 'verified=') !== false)
-				{
 					$isverified = intval(trim($line,"verified="));
-				}
-				*/
 			}
+			
 			fclose($userdatafile);
 			
 			if($isverified == 0)
@@ -70,15 +66,20 @@ function verifyuser($username, $token)
 				replacestringinfile($userdatapath,
 					"verified=0",
 					"verified=1");
-				echo "verifyuser(): verified";
 				$retval = 1;
 			}
-			else if ($isverified == 1)
-				echo "verifyuser(): already verified";
+			else if($isverified == 1)
+			{
+				//user has already been verified
+				$retval = 2;
+			}
 		}
-		else echo "verifyuser(): not a dir";
+		else
+		{
+		//user doesn't exist
+		$retval = 3;
+		}
 	}
-	else echo "verifyuser(): hash incorrect";
 	
 	return $retval;
 }
