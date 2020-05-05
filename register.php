@@ -158,7 +158,7 @@ function testinput($data)
 		$message = "<html><head><title>Verify your Keyndb account</title>
 			</head><body><h3>Hi $username, click 
 			<a href='https://www.keyndb.com/verify?
-			user=$username&token=$token'> here </a>
+			username=$username&token=$token'> here </a>
 			to verify your account.</h3></body></html>";
 		
 		// Headers for HTML email
