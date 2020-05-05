@@ -9,13 +9,15 @@ require 'top-cache.php';
 	<!-- Other -->
 	<meta charset="utf-8">
 	<title>Keyndb ALPHA</title>
-	<meta name="description" content="Keyn mod hosting site!">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta	name="description"
+		content="Keyn mod hosting site!">
+	<meta	name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	
+
 	<!-- Feather Icons -->
 	<script src="https://unpkg.com/feather-icons"></script>
-	
+
 	<!-- Bootstrap CSS -->
 	<link
 		rel="stylesheet"
@@ -70,11 +72,13 @@ require 'top-cache.php';
 			</ul>
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Log in</a>
+					<a class="nav-link" href="
+					login">
+					Log in</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="
-					register.php">
+					register">
 					Register</a>
 				</li>
 			</ul>

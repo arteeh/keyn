@@ -1,6 +1,7 @@
-<?php require 'top.php' ?>
+<?php
+require 'top.php';
+require 'libusers.php';
 
- <?php
 $usernameerror = $emailerror = $passworderror = $passwordverror = "";
 $username = $email = $password = $passwordv = "";
 $willcreate = 1;
@@ -138,24 +139,32 @@ function testinput($data)
 	
 	<?php
 	
-	// Hash the username
-	// Hash the password
-	// Hash the email address
-	// Add the user to the database with verified=0
-	
 	if($willcreate == 1)
 	{
+		createuser($username, $email, $password);
+		
+		$token = hash('sha256', $username);
+		
 		$subject = "Verify your Keyndb account";
-		$message = '<html><head>
-			<title>Verify your Keyndb account</title>
-			</head><body><h3>
-			Click 
-			<a href="https://www.keyndb.com/verify.php">here</a>
-			 to verify your account.
-			</h3></body></html>
+		$message = '
+		<html>
+		<head>
+		<title>Verify your Keyndb account</title>
+		</head>
+		<body>
+		<h3>
+		Hi ' . $username . ', click 
+		<a href="https://www.keyndb.com/verify?user=' .
+		$username . '&token=' . $token . ">
+		here 
+		</a>
+		to verify your account.
+		</h3>
+		</body>
+		</html>
 		';
 		
-		// Always set content-type when sending HTML email
+		// Headers for HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		$headers .= 'From: Keyndb <noreply@keyndb.com>' . "\r\n";
