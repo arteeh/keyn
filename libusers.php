@@ -1,21 +1,21 @@
 <?php
 
 $dbdir = 'db';
-$userdbdir = '$dbdir/user';
+$userdbdir = "$dbdir/user";
 
 function createuser($username, $email, $password)
 {
-	echo "createuser(): in functions<br>";
-	$usernamehash = hash('sha256', $username);
-	$emailhash = hash('sha256', $email);
+	echo "createuser(): entering<br>";
+	$usernamehash = hash("sha256", $username);
+	$emailhash = hash("sha256", $email);
 	$passwordhash = password_hash($password, PASSWORD_BCRYPT);
 
-	$userdir = '$userdbdir/$usernamehash';
-	$userdatapath = '$userdir/data';
-	$useravatarpathplaceholder = '$userdbdir/placeholderuser/avatar.webp';
-	$useravatarpath = '$userdir/avatar.webp';
+	$userdir = "$userdbdir/$usernamehash";
+	$userdatapath = "$userdir/data";
+	$useravatarpathplaceholder = "$userdbdir/placeholderuser/avatar.webp";
+	$useravatarpath = "$userdir/avatar.webp";
 	
-	echo "createuser(): in creating directory $userdir<br>";
+	echo "createuser(): creating directory $userdir<br>";
 	echo mkdir($userdir) . "<br>";
 	echo "createuser(): copying avatar<br>";
 	copy($useravatarpathplaceholder, $useravatarpath);
@@ -28,7 +28,7 @@ function createuser($username, $email, $password)
 	fwrite($datafile, "verified=0\n");
 	fclose($datafile);
 	
-	echo "createuser(): done<br>";
+	echo "createuser(): leaving<br>";
 }
 
 function replacestringinfile($filename, $toreplace, $replacewith)
@@ -51,12 +51,12 @@ function verifyuser($username, $token)
 	$comparetoken = hash('sha256', $username);
 	if(hash_equals($token, $comparetoken))
 	{
-		$userdir = '$userdbdir/$token';
+		$userdir = "$userdbdir/$token";
 		
 		//check if the user exists
 		if(is_dir($userdir))
 		{
-			$datapath = '$userdir/data';
+			$datapath = "$userdir/data";
 			$datafile = fopen($datapath);
 			while(!feof($datafile))
 			{

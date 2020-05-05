@@ -143,14 +143,14 @@ function testinput($data)
 	{
 		createuser($username, $email, $password);
 		
-		$token = hash('sha256', $username);
+		$token = hash("sha256", $username);
 		
 		$subject = "Verify your Keyndb account";
-		$message = '<html><head><title>Verify your Keyndb account</title>
+		$message = "<html><head><title>Verify your Keyndb account</title>
 			</head><body><h3>Hi $username, click 
-			<a href="https://www.keyndb.com/verify?
-			user=$username&token=$token> here </a>
-			to verify your account.</h3></body></html>';
+			<a href='https://www.keyndb.com/verify?
+			user=$username&token=$token'> here </a>
+			to verify your account.</h3></body></html>";
 		
 		// Headers for HTML email
 		$headers = "MIME-Version: 1.0" . "\r\n";
