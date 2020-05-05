@@ -54,11 +54,13 @@ function verifyuser($username, $token)
 			
 			while(!feof($datafile))
 			{
+				/*
 				$line = fgets($datafile);
 				if(strpos($line, 'verified=') !== false)
 				{
-					//$isverified = intval(trim($line,"verified="));
+					$isverified = intval(trim($line,"verified="));
 				}
+				*/
 			}
 			fclose($datafile);
 			
