@@ -155,7 +155,7 @@ function testinput($data)
 		<h3>
 		Hi ' . $username . ', click 
 		<a href="https://www.keyndb.com/verify?user=' .
-		$username . '&token=' . $token . ">
+		$username . '&token=' . $token . '>
 		here 
 		</a>
 		to verify your account.
