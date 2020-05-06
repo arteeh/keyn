@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -19,15 +20,9 @@ require 'top-cache.php';
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<!-- Feather Icons -->
-	<script src="https://unpkg.com/feather-icons"></script>
-
 	<!-- Bootstrap CSS -->
-	<link
-		rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-		crossorigin="anonymous"
+	<link	rel="stylesheet"
+		href="css/bootstrap.min.css"
 	>
 	
 	<!-- Favicon stuff -->
@@ -48,15 +43,10 @@ require 'top-cache.php';
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			Keyndb ALPHA
 		</a>
-		<button
-			class="navbar-toggler"
+		<button	class="navbar-toggler"
 			type="button"
 			data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent"
-			aria-expanded="false"
-			aria-label="Toggle navigation"
-		>
+			data-target="#navbarSupportedContent">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -67,17 +57,12 @@ require 'top-cache.php';
 						Feature requests
 					</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="
-						#">
-						Think of more buttons to put here!
-					</a>
-				</li>
 			</ul>
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="
-					login">
+					<a	class="nav-link"
+						href="login"
+					>
 					Log in</a>
 				</li>
 				<li class="nav-item">

@@ -20,13 +20,13 @@ while(!feof($gamedatafile))
 {
 	$line = fgets($gamedatafile);
 	if(strpos($line, 'name=') !== false)
-		$gamename = trim($line,"name=");
+		$gamename = trim(str_replace("name=","",$line));
 	else if(strpos($line, 'description=') !== false)
-		$gamedescription = trim($line,"description=");
+		$gamedescription = trim(str_replace("description=","",$line));
 	else if(strpos($line, 'modcount=') !== false)
-		$gamemodcount = trim($line,"modcount=");
+		$gamemodcount = trim(str_replace("modcount=","",$line));
 	else if(strpos($line, 'downloads=') !== false)
-		$gamedownloads = trim($line,"downloads=");
+		$gamedownloads = trim(str_replace("downloads=","",$line));
 }
 fclose($gamedatafile);
 
@@ -53,17 +53,17 @@ while (($modid = readdir($modopendir)) !== false)
 		{
 			$line = fgets($moddatafile);
 			if(strpos($line, 'name=') !== false)
-				$mod['name'] = trim($line,"name=");
+				$mod['name'] = trim(str_replace("name=","",$line));
 			else if(strpos($line, 'description=') !== false)
-				$mod['description'] = trim($line,"description=");
+				$mod['description'] = trim(str_replace("description=","",$line));
 			else if(strpos($line, 'downloads=') !== false)
 			{
-				$dl = trim($line,"downloads=");
+				$dl = trim(str_replace("downloads=","",$line));
 				$mod['downloads'] = $dl;
 				$totaldownloads = $totaldownloads + intval($dl);
 			}
 			else if(strpos($line, 'seeders=') !== false)
-				$mod['seeders'] = trim($line,"seeders=");
+				$mod['seeders'] = trim(str_replace("seeders=","",$line));
 			
 		}
 		

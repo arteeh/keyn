@@ -1,16 +1,26 @@
 <?php
 
+function generateid()
+{
+	$idisunique = 0;
+	$id = 0;
+	while(!$idisunique)
+	{
+		$id++;
+		if(!is_dir("db/users/$id")) $idisunique = 1;
+	}
+	return $id;
+}
+
 function createuser($username, $email, $password)
 {	
-	$userdbdir = "db/user";
-	$usernamehash = hash("sha256", $username);
-	$emailhash = hash("sha256", $email);
 	$passwordhash = password_hash($password, PASSWORD_BCRYPT);
-
-	$userdir = "$userdbdir/$usernamehash";
+	
+	$userid = generateid();
+	$userdir = "db/users/$userid";
 	$userdatapath = "$userdir/data";
-	$useravatarpathplaceholder = "$userdbdir/placeholderuser/avatar.webp";
 	$useravatarpath = "$userdir/avatar.webp";
+	$useravatarpathplaceholder = "db/users/placeholderuser/avatar.webp";
 	
 	mkdir($userdir);
 	
@@ -18,11 +28,13 @@ function createuser($username, $email, $password)
 	
 	$datafile = fopen($userdatapath, 'w');
 
-	fwrite($datafile, "username=$usernamehash\n");
-	fwrite($datafile, "email=$emailhash\n");
+	fwrite($datafile, "username=$username\n");
+	fwrite($datafile, "email=$email\n");
 	fwrite($datafile, "password=$passwordhash\n");
 	fwrite($datafile, "verified=0\n");
 	fclose($datafile);
+	
+	return $userid;
 }
 
 function replacestringinfile($filename, $toreplace, $replacewith)
@@ -33,17 +45,15 @@ function replacestringinfile($filename, $toreplace, $replacewith)
 	file_put_contents($filename, $content);
 }
 
-function verifyuser($username, $token)
+function verifyuser($userid, $token)
 {
 	$retval = 0;
 	
-	$userdbdir = "db/user";
-	
 	//sha256 hash the username and compare to the token to see if its all good
-	$comparetoken = hash('sha256', $username);
+	$comparetoken = hash('sha256', $userid);
 	if(hash_equals($token, $comparetoken))
 	{
-		$userdir = "$userdbdir/$token";
+		$userdir = "db/users/$userid";
 		
 		//check if the user exists
 		if(is_dir($userdir))

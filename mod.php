@@ -22,7 +22,7 @@ require 'top.php';
 $gamedatadir = "$gamedir/data";
 $gamedatafile = fopen($gamedatadir, "r");
 $gamename = fgets($gamedatafile);
-$gamename = trim($gamename,"name=");
+$gamename = trim(str_replace("name=","",$gamename));
 fclose($gamedatafile);
 
 //get mod data
@@ -35,15 +35,15 @@ while(!feof($moddatafile))
 {
 	$line = fgets($moddatafile);
 	if(strpos($line, 'name=') !== false)
-		$modname = trim($line,"name=");
+		$modname = trim(str_replace("name=","",$line));
 	else if(strpos($line, 'description=') !== false)
-		$moddescription = trim($line,"description=");
+		$moddescription = trim(str_replace("description=","",$line));
 	else if(strpos($line, 'downloads=') !== false)
-		$moddownloads = trim($line,"downloads=");
+		$moddownloads = trim(str_replace("downloads=","",$line));
 	else if(strpos($line, 'seeders=') !== false)
-		$modseeders = trim($line,"seeders=");
+		$modseeders = trim(str_replace("seeders=","",$line));
 	else if(strpos($line, 'leechers=') !== false)
-		$modleechers = trim($line,"leechers=");
+		$modleechers = trim(str_replace("leechers=","",$line));
 }
 fclose($moddatafile);
 ?>

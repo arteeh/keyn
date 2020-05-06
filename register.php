@@ -24,11 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		}
 		
 		//check if username already exists
-		$usernamehashed = hash("sha256", $username);
-		if(is_dir("db/user/$usernamehashed"))
+		$allusers = array_diff(scandir("db/users/"),array('..','.'));
+		foreach($allusers as $thisuserpath)
 		{
-			$usernameerror = "This username is already taken.";
-			$willcreate = 0;
+			$thisdatafile = fopen("db/users/$thisuserpath/data", "r");
+			while(!feof($thisdatafile))
+			{
+				$line = fgets($thisdatafile);
+				if(strpos($line, "username=") !== false)
+					$thisusername = trim(str_replace("username=","",$line));
+				echo "username: " . $username . "<br>";
+				echo "thisusername: " . $thisusername . "<br>";
+				if($username == $thisusername)
+				{
+					$usernameerror = "This username has already been taken.";
+					$willcreate = 0;
+				}
+			}
+		fclose($thisdatafile);
+			if(!$willcreate) break;
 		}
 	}
 
@@ -150,15 +164,15 @@ function testinput($data)
 	
 	if($willcreate == 1)
 	{
-		createuser($username, $email, $password);
+		$userid = createuser($username, $email, $password);
 		
-		$token = hash("sha256", $username);
+		$token = hash("sha256", $userid);
 		
 		$subject = "Verify your Keyndb account";
 		$message = "<html><head><title>Verify your Keyndb account</title>
 			</head><body><h3>Hi $username, click 
 			<a href='https://www.keyndb.com/verify?
-			username=$username&token=$token'> here </a>
+			userid=$userid&token=$token'> here </a>
 			to verify your account.</h3></body></html>";
 		
 		// Headers for HTML email
@@ -166,8 +180,7 @@ function testinput($data)
 		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 		$headers .= 'From: Keyndb <noreply@keyndb.com>' . "\r\n";
 	
-		$mailsuccess = mail($email,$subject,$message,$headers);
-		if (!$mailsuccess) echo error_get_last()['message'];
+		mail($email,$subject,$message,$headers);
 
 		echo "<h5>A verification email has just been sent to $email. Click the link in there to verify your account.</h5>";
 	}
