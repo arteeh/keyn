@@ -1,10 +1,14 @@
 <?php
 session_start();
 
+// If loggedin var is not set, set to 0
+if(!isset($_SESSION["loggedin"])) $_SESSION["loggedin"] = 0;
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'top-cache.php';
+require_once 'top-cache.php';
+require_once 'libusers.php';
 ?>
 
 <!doctype html>
@@ -15,9 +19,11 @@ require 'top-cache.php';
 	<meta charset="utf-8">
 	<title>Keyndb ALPHA</title>
 	<meta	name="description"
-		content="Keyn mod hosting site!">
+			content="Keyn mod hosting site!"
+	>
 	<meta	name="viewport"
-		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+	>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<!-- Bootstrap CSS -->
@@ -38,7 +44,7 @@ require 'top-cache.php';
 <body>
 
 <div class="container-lg">
-	<nav class="navbar navbar-expand-lg navbar-light">
+	<nav class="navbar navbar-expand-md navbar-light">
 		<a class="navbar-brand" href="index">
 			<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 			Keyndb ALPHA
@@ -59,6 +65,10 @@ require 'top-cache.php';
 				</li>
 			</ul>
 			<ul class="navbar-nav">
+			<?php
+			if($_SESSION["loggedin"] == 0)
+			{
+			?>
 				<li class="nav-item">
 					<a	class="nav-link"
 						href="login"
@@ -70,6 +80,50 @@ require 'top-cache.php';
 					register">
 					Register</a>
 				</li>
+			<?php
+			}
+			else
+			{
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="uploadmod">
+						Upload
+					</a>
+				</li>
+				<?php
+				
+				// Get username and profile picture
+				$userid = $_SESSION["userid"];
+				$userdir = "db/users/$userid";
+				$useravatardir = "$userdir/avatar.webp";
+				$userdatadir = "$userdir/data";
+				$username = getsingleitem($userdatadir, "username");
+			?>
+				<li class="nav-item">
+					<a	class="nav-link"
+						href="profile"
+					>
+						<img
+						src="<?php echo $useravatardir;?>"
+						alt="Your profile picture"
+						width="15"
+						height="15"
+						>
+						<?php echo $username; ?>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link"
+					href="
+					logout?from=
+					<?php
+					echo $_SERVER['REQUEST_URI'];
+					?>">
+					Log out</a>
+				</li>
+			<?php
+			}
+			?>
 			</ul>
 		</div>
 	</nav>

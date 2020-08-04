@@ -1,7 +1,9 @@
 <?php
-// Check if game and mod in GET exist to prevent issues
+
 $gameid = $_GET['game'];
 $gamedir = "db/games/$gameid";
+
+// Check if game and mod in GET exist to prevent issues
 if(!is_dir($gamedir))
 {
 	header("Location: error.php");
@@ -9,158 +11,155 @@ if(!is_dir($gamedir))
 }
 
 $modid = $_GET['mod'];
-$moddir = "db/games/$gameid/mods/$modid";
+$moddir = "$gamedir/mods/$modid";
+
 if(!is_dir($moddir))
 {
 	header("Location: error.php");
 	die();
 }
 
-require 'top.php';
+require_once 'top.php';
+require_once 'libmod.php';
+require_once 'libgame.php';
 
-//get game data
-$gamedatadir = "$gamedir/data";
-$gamedatafile = fopen($gamedatadir, "r");
-$gamename = fgets($gamedatafile);
-$gamename = trim(str_replace("name=","",$gamename));
-fclose($gamedatafile);
+$game = getGame($gameid);
+$mod = getMod($gameid,$modid);
 
-//get mod data
-$moddatadir = "$moddir/data";
-$modlogodir = "$moddir/logo.webp";
-$modbannerdir = "$moddir/banner.webp";
-
-$moddatafile = fopen($moddatadir, "r");
-while(!feof($moddatafile))
-{
-	$line = fgets($moddatafile);
-	if(strpos($line, 'name=') !== false)
-		$modname = trim(str_replace("name=","",$line));
-	else if(strpos($line, 'description=') !== false)
-		$moddescription = trim(str_replace("description=","",$line));
-	else if(strpos($line, 'downloads=') !== false)
-		$moddownloads = trim(str_replace("downloads=","",$line));
-	else if(strpos($line, 'seeders=') !== false)
-		$modseeders = trim(str_replace("seeders=","",$line));
-	else if(strpos($line, 'leechers=') !== false)
-		$modleechers = trim(str_replace("leechers=","",$line));
-}
-fclose($moddatafile);
 ?>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<a href="game.php?game=<?php echo $gameid; ?>" type="button" class="btn btn-primary">
-		Back to <?php echo $gamename; ?>
+	<a href="game.php?game=<?php echo $game['id']; ?>" type="button" class="btn btn-primary">
+		Back to <?php echo $game['name']; ?>
 	</a>
 	<span class="my-auto">
-		Downloads: <?php echo $moddownloads; ?>
+		Downloads: <?php echo $mod['downloads']; ?>
 		&nbsp
-		Seeders: <?php echo $modseeders; ?>
+		Seeders: <?php echo $mod['seeders']; ?>
 		&nbsp
-		Leechers: <?php echo $modleechers; ?>
+		Leechers: <?php echo $mod['leechers']; ?>
 	</span>
 </div>
 
 <div class="card bg-light text-white my-4">
-	<img class="card-img" src="<?php echo $modbannerdir; ?>" alt="Card image">
+	<object	class="card-img"
+			data="<?php echo "db/placeholdermod/banner.webp"; ?>"
+			type="image/webp"
+	>
+		<img class="card-img" src="<?php echo $mod['bannerdir']; ?>" alt="Game banner image">
+	</object>
 	<div class="card-img-overlay text-shadow">
-		<h2 class="card-title"><?php echo $modname; ?></h2>
+		<h2 class="card-title"><?php echo $mod['name']; ?></h2>
 	</div>
 </div>
 
-<div class="card my-4">
-	<div class="card-header">
-		<ul class="nav nav-tabs card-header-tabs">
-			<li class="nav-item">
-				<a	class="nav-link  
-					<?php
-					if ($_GET['page'] == "description" 
-						|| $_GET['page'] == "")
-					{
-						echo "active";
-					}
-					?>"
-					href="mod?game=<?php echo $gameid; ?>
-					&mod=<?php echo $modid; ?>
-					&page=description">
-					Description
-				</a>
-			</li>
-			<li class="nav-item">
-				<a	class="nav-link  
-					<?php
-					if ($_GET['page'] == "downloads")
-					{
-						echo "active";
-					}
-					?>"
-					href="mod?game=<?php echo $gameid; ?>
-					&mod=<?php echo $modid; ?>
-					&page=downloads">
-					Downloads
-				</a>
-			</li>
-			<li class="nav-item">
-				<a	class="nav-link 
-					<?php
-					if ($_GET['page'] == "comments")
-					{
-						echo "active";
-					}
-					?>"
-					href="mod?game=<?php echo $gameid; ?>
-					&mod=<?php echo $modid; ?>
-					&page=comments">
-					Comments
-				</a>
-			</li>
-		</ul>
-	</div>
-	
-	<?php
-	// Set description as default page to open
-	if(!isset($_GET['page'])) $_GET['page'] = 'description';
-	
-	if ($_GET['page'] == 'description')
-	{
-	?>
-	<div class="card-body">
-		<div class="card-text">
+<div class="my-4">
+	<ul	class="nav nav-tabs"
+		role="tablist"
+	>
+		<li class="nav-item">
+			<a	class="nav-link active" id="description-tab"
+				data-toggle="tab" href="#description"
+				role="tab"
+			>Description</a>
+		</li>
+		<li class="nav-item">
+			<a	class="nav-link" id="downloads-tab"
+				data-toggle="tab" href="#downloads"
+				role="tab"
+			>Downloads</a>
+		</li>
+		<li class="nav-item">
+			<a	class="nav-link" id="comments-tab"
+				data-toggle="tab" href="#comments"
+				role="tab"
+			>Comments</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div	class="	tab-pane fade
+						border rounded-bottom border-top-0 p-3
+						show active"
+				id="description"
+				role="tabpanel"
+		>
 			<?php
-			$moddescriptionfile = fopen("$moddir/bigdescription", "r");
-			
+			$moddescriptionfile = fopen($mod['descriptiondir'], "r");
 			while(!feof($moddescriptionfile))
-			{
 				echo fgets($moddescriptionfile);
-			}
-			
 			fclose($moddescriptionfile);
 			?>
 		</div>
+		<div	class="	tab-pane fade
+						border rounded-bottom border-top-0 p-3"
+				id="downloads"
+				role="tabpanel"
+		>
+			<?php
+			$downloads = getDownloads($moddir);
+			$otherPrinted = 0;
+			if(count($downloads) == 0)
+			{
+				echo "<h4 class='mt-1'>This mod currently doesn't have any downloads.</h4>";
+			}
+			foreach($downloads as $download)
+			{
+				if($download['type'] == 'main') echo "<h4 class='mt-1'>Main download</h4>";
+				else if($download['type'] == 'xtra' && $otherPrinted == 0)
+				{
+					echo "<h4>Other downloads</h4>";
+					$otherPrinted = 1;
+				}
+				?>
+				<div class="card my-4">
+					<img class="card-img-top" src="<?php echo $download['banner'] ?>" alt="">
+					<div class="card-body">
+						<h5 class="card-title">
+							<?php echo $download['name']; ?>
+						</h5>
+						<p class="card-text">
+							<?php echo $download['description'] ?>
+						</p>
+						<div class="btn-group">
+							<a href="<?php
+								// The 0 is not a bug. The download button returns the 0th torrent, which is the latest version
+								$dir = $download['torrents'][0]['dir'];
+								echo "$downloaddir/$dir";
+							?>" type="button" class="btn btn-primary">Download</a>
+							<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+								<span>
+									<?php echo $download['torrents'][0]['version']; ?>
+								</span>
+							</button>
+							<div class="dropdown-menu">
+								<?php
+								foreach($download['torrents'] as $torrent)
+								{
+									?>
+									<a class='dropdown-item' href="<?php 
+										$dir = $torrent['dir'];
+										echo "$downloaddir/$dir" ?>">
+										<?php echo $torrent['version']; ?>
+									</a>
+								<?php
+								}
+								?>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php
+			}
+			?>
+		</div>
+		<div	class="	tab-pane fade
+						border rounded-bottom border-top-0 p-3"
+				id="comments"
+				role="tabpanel"
+		>
+			<h4 class='mt-1'>Comments coming soon!</h4>
+		</div>
 	</div>
-	<?php
-	}
-	else if ($_GET['page'] == "downloads")
-	{
-	?>
-	<div class="card-body">
-		<h5 class="card-title">
-			Downloads coming soon!
-		</h5>
-	</div>
-	<?php
-	}
-	else if ($_GET['page'] == "comments")
-	{
-	?>
-	<div class="card-body">
-		<h5 class="card-title">
-			Comments coming soon!
-		</h5>
-	</div>
-	<?php
-	}
-	?>
 </div>
 
-<?php require 'bot.php' ?>
+<?php require_once 'bot.php'; ?>

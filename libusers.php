@@ -1,13 +1,27 @@
 <?php
 
+function getsingleitem($datadir, $key)
+{
+	$datafile = fopen($datadir, "r");
+	while(!feof($datafile))
+	{
+		$line = fgets($datafile);
+		if(strpos($line, "$key=") !== false)
+			$value = str_replace("$key=","",$line);
+			break;
+	}
+	fclose($datafile);
+	
+	return $value;
+}
+
 function generateid()
 {
-	$idisunique = 0;
 	$id = 0;
-	while(!$idisunique)
+	while(true)
 	{
+		if(!is_dir("db/users/$id")) break;
 		$id++;
-		if(!is_dir("db/users/$id")) $idisunique = 1;
 	}
 	return $id;
 }

@@ -1,7 +1,7 @@
 <?php
 
-require 'top.php';
-require 'libusers.php';
+require_once 'top.php';
+require_once 'libusers.php';
 
 $usernameerror = $emailerror = $passworderror = $passwordverror = "";
 $username = $email = $password = $passwordv = "";
@@ -33,15 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 				$line = fgets($thisdatafile);
 				if(strpos($line, "username=") !== false)
 					$thisusername = trim(str_replace("username=","",$line));
-				echo "username: " . $username . "<br>";
-				echo "thisusername: " . $thisusername . "<br>";
 				if($username == $thisusername)
 				{
 					$usernameerror = "This username has already been taken.";
 					$willcreate = 0;
 				}
 			}
-		fclose($thisdatafile);
+			fclose($thisdatafile);
 			if(!$willcreate) break;
 		}
 	}
@@ -103,6 +101,7 @@ function testinput($data)
 	$data = htmlspecialchars($data);
 	return $data;
 }
+
 ?>
 
 <div class="jumbotron my-4">
@@ -188,4 +187,4 @@ function testinput($data)
 
 </div>
 
-<?php require 'bot.php' ?>
+<?php require_once 'bot.php' ?>

@@ -1,44 +1,8 @@
 <?php 
-require 'top.php';
+require_once 'top.php';
+require_once 'libgame.php';
 
-$gameopendir = opendir("db/games");
-$games = array();
-
-while (($gameid = readdir($gameopendir)) !== false)
-{
-	if (!is_dir($gameid))
-	{
-		$game = array();
-		$game['gameid'] = $gameid;
-		
-		$gamelogo = "db/games/$gameid/logo.webp";
-		$game['logo'] = $gamelogo;
-		
-		$gamedatadir = "db/games/$gameid/data";
-		$gamedatafile = fopen($gamedatadir, "r");
-		
-		while(!feof($gamedatafile))
-		{
-			$line = fgets($gamedatafile);
-			if(strpos($line, 'name=') !== false)
-				$game['name'] = trim($line,"name=");
-			else if(strpos($line, 'description=') !== false)
-				$game['description'] = trim($line,"description=");
-			else if(strpos($line, 'modcount=') !== false)
-				$game['modcount'] = trim($line,"modcount=");
-			else if(strpos($line, 'downloads=') !== false)
-				$game['downloads'] = trim($line,"downloads=");
-		}
-
-		fclose($gamedatafile);
-		
-		array_push($games, $game);
-	}
-}
-closedir($gameopendir);
-
-//sort by downloads, descending
-array_multisort(array_column($games, 'downloads'), SORT_DESC, $games);
+$games = getGames();
 
 $gameslength = count($games);
 ?>
@@ -53,26 +17,32 @@ $gameslength = count($games);
 	</h5>
 </div>
 
-<div class="container my-4">
-	<div class="row justify-content-center">
+<div class="my-4 p-0">
+	<div class="row justify-content-center p-0">
 		<?php
 		for($i = 0; $i < $gameslength; $i++)
 		{
 			?>
-			<a class="item" href="game?game=<?php echo $games[$i]['gameid']; ?>" >
-				<div class="card text-dark m-1" style="width: 13.375rem;">
-					<img 
-						src="<?php echo $games[$i]['logo']; ?>" 
-						class="card-img-top img-fluid" 
-						alt="Game image"
+			<a class="item" href="game?game=<?php echo $games[$i]['id']; ?>" >
+				<div class="card text-dark m-1" style="width: 11.5rem;">
+					<object	class="card-img"
+							data="<?php echo "db/placeholdergame/logo.webp"; ?>"
+							type="image/webp"
 					>
+						<img	class="card-img-top img-fluid"
+								src="<?php echo $games[$i]['logopath']; ?>"
+								alt="Game logo"
+						>
+					</object>
 					<div class="card-body">
 						<h5 class="card-title">
 							<?php echo $games[$i]['name']; ?>
 						</h5>
+						<!--
 						<p class="card-text">
 							<?php echo $games[$i]['description']; ?>
 						</p>
+						-->
 					</div>
 					<div class="card-footer">
 						<small class="text-muted">
@@ -90,4 +60,4 @@ $gameslength = count($games);
 	</div>
 </div>
 
-<?php require 'bot.php' ?>
+<?php require_once 'bot.php' ?>

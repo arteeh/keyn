@@ -1,4 +1,6 @@
 <?php
+require 'top.php';
+
 $login = $password = "";
 $loginerror = $passworderror = "";
 
@@ -84,8 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		}
 	}
 }
-
-require 'top.php';
 ?>
 
 <div class="jumbotron my-4">
