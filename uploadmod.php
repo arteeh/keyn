@@ -2,7 +2,8 @@
 
 require_once 'libmod.php';
 
-$gameid = $modname = $moddescription = "";
+$gameid			= $modname		= $moddescription		= "";
+$gameiderror	= $modnameerror	= $moddescriptionerror	= "";
 
 // Check if something is in post already
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -11,18 +12,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	$modname = $_POST['modname'];
 	$moddescription = $_POST['moddescription'];
 	
-	if(	$gameid == "" || $modname == "" || $moddescription == "")
+	$success = 1;
+	
+	if($gameid == "")
 	{
-		echo "Something's missing.<br>";
+		$gameiderror = "You haven't selected a game!";
+		$success = 0;
 	}
-	else if($gameid == "null")
+	if($modname == "")
 	{
-		echo "Select a game!<br>";
+		$modnameerror = "You haven't given your mod a title!";
+		$success = 0;
 	}
-	else
+	if($moddescription == "")
+	{
+		$moddescriptionerror = "You haven't given your mod a description!";
+		$success = 0;
+	}
+	
+	if($success == 1)
 	{
 		$modid = createMod($gameid,$modname,$moddescription);
-		// If createMod is successful, send user to mod page
 		header("Location: mod?game=$gameid&mod=$modid");
 		die();
 	}
@@ -43,7 +53,7 @@ require_once 'libgame.php';
 	>
 		<div class="form-group">
 			<select name="gameid" class="custom-select">
-				<option value="null">
+				<option value="">
 					Game
 				</option>
 				<?php
@@ -52,13 +62,16 @@ require_once 'libgame.php';
 				foreach($games as $game)
 				{
 					?>
-					<option value="<?php echo $game['id']; ?>">
+					<option	value="<?php echo $game['id']; ?>"
+							<?php if($game['id'] == $gameid) echo "selected"; ?>
+					>
 						<?php echo $game['name']; ?>
 					</option>
 					<?php
 				}
 				?>
 			</select>
+			<?php echo $gameiderror; ?>
 		</div>
 		<div class="form-group">
 			<input
@@ -68,6 +81,7 @@ require_once 'libgame.php';
 				value="<?php echo $modname; ?>"
 				placeholder="Title"
 			>
+			<?php echo $modnameerror; ?>
 		</div>
 		<div class="form-group">
 			<textarea	class="form-control"
@@ -75,6 +89,7 @@ require_once 'libgame.php';
 						name="moddescription"
 						placeholder="Description (optional)"
 			><?php echo $moddescription; ?></textarea>
+			<?php echo $moddescriptionerror; ?>
 		</div>
 		<small class="form-text text-muted my-3">
 			You can add files later.

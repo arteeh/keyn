@@ -96,49 +96,50 @@ $mod = getMod($gameid,$modid);
 				role="tabpanel"
 		>
 			<?php
-			$downloads = getDownloads($moddir);
+			$files = getFiles($gameid,$modid);
 			$otherPrinted = 0;
-			if(count($downloads) == 0)
+			if(count($files) == 0)
 			{
-				echo "<h4 class='mt-1'>This mod currently doesn't have any downloads.</h4>";
+				echo "<h4 class='mt-1'>This mod currently doesn't have any files.</h4>";
 			}
-			foreach($downloads as $download)
+			foreach($files as $file)
 			{
-				if($download['type'] == 'main') echo "<h4 class='mt-1'>Main download</h4>";
-				else if($download['type'] == 'xtra' && $otherPrinted == 0)
+				if($file['type'] == 'main') echo "<h4 class='mt-1'>Main file</h4>";
+				else if($file['type'] == 'xtra' && $otherPrinted == 0)
 				{
-					echo "<h4>Other downloads</h4>";
+					echo "<h4>Other files</h4>";
 					$otherPrinted = 1;
 				}
 				?>
 				<div class="card my-4">
-					<img class="card-img-top" src="<?php echo $download['banner'] ?>" alt="">
+					<img class="card-img-top" src="<?php echo $file['banner'] ?>" alt="">
 					<div class="card-body">
 						<h5 class="card-title">
-							<?php echo $download['name']; ?>
+							<?php echo $file['name']; ?>
 						</h5>
 						<p class="card-text">
-							<?php echo $download['description'] ?>
+							<?php echo $file['description'] ?>
 						</p>
 						<div class="btn-group">
 							<a href="<?php
 								// The 0 is not a bug. The download button returns the 0th torrent, which is the latest version
-								$dir = $download['torrents'][0]['dir'];
-								echo "$downloaddir/$dir";
+								$filedir = "";
+								$dir = $file['torrents'][0]['dir'];
+								echo "$filedir/$dir";
 							?>" type="button" class="btn btn-primary">Download</a>
 							<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
 								<span>
-									<?php echo $download['torrents'][0]['version']; ?>
+									<?php echo $file['torrents'][0]['version']; ?>
 								</span>
 							</button>
 							<div class="dropdown-menu">
 								<?php
-								foreach($download['torrents'] as $torrent)
+								foreach($file['torrents'] as $torrent)
 								{
 									?>
 									<a class='dropdown-item' href="<?php 
 										$dir = $torrent['dir'];
-										echo "$downloaddir/$dir" ?>">
+										echo "$filedir/$dir" ?>">
 										<?php echo $torrent['version']; ?>
 									</a>
 								<?php

@@ -6,26 +6,28 @@ function getMod($gameid,$modid)
 	
 	$moddir = "db/games/$gameid/mods/$modid";
 	
-	$mod['id'] = $modid;
-	$mod['logodir'] = "$moddir/logo.webp";
-	$mod['bannerdir'] = "$moddir/banner.webp";
-	$mod['descriptiondir'] = "$moddir/description";
+	$mod['id'] =				$modid;
+	$mod['logodir'] =			"$moddir/logo.webp";
+	$mod['bannerdir'] =			"$moddir/banner.webp";
+	$mod['descriptiondir'] =	"$moddir/description";
 	
 	$moddatadir = "$moddir/data";
 	$moddatafile = fopen($moddatadir, "r");
 	while(!feof($moddatafile))
 	{
 		$line = fgets($moddatafile);
-		if(strpos($line, 'name=') !== false)
-			$mod['name'] = trim(str_replace("name=","",$line));
-		else if(strpos($line, 'description=') !== false)
-			$mod['description'] = trim(str_replace("description=","",$line));
-		else if(strpos($line, 'downloads=') !== false)
-			$mod['downloads'] = trim(str_replace("downloads=","",$line));
-		else if(strpos($line, 'seeders=') !== false)
-			$mod['seeders'] = trim(str_replace("seeders=","",$line));
-		else if(strpos($line, 'leechers=') !== false)
-			$mod['leechers'] = trim(str_replace("leechers=","",$line));
+		if		(strpos($line, 'name='		) !== false)
+			$mod['name']		= trim(str_replace("name=",		"",$line));
+		else if	(strpos($line, 'downloads='	) !== false)
+			$mod['downloads']	= trim(str_replace("downloads=","",$line));
+		else if	(strpos($line, 'seeders='	) !== false)
+			$mod['seeders']		= trim(str_replace("seeders=",	"",$line));
+		else if	(strpos($line, 'leechers='	) !== false)
+			$mod['leechers']	= trim(str_replace("leechers=",	"",$line));
+		else if	(strpos($line, 'updated='	) !== false)
+			$mod['updated']		= trim(str_replace("updated=",	"",$line));
+		else if	(strpos($line, 'released='	) !== false)
+			$mod['released']	= trim(str_replace("released=",	"",$line));
 	}
 	fclose($moddatafile);
 	
@@ -102,89 +104,90 @@ function createMod($gameid,$modname,$moddescription)
 	fclose($descriptionfile);
 	
 	// Create downloads folder
-	mkdir("$moddir/downloads");
+	mkdir("$moddir/files");
 	
-	// Place banner in folder or add placeholder
+	// TODO: Place banner in folder
 	
-	// Place logo in folder or add placeholder
+	// TODO: Place logo in folder
 	
 	return $modid;
 }
 
 function createFile($modid,$filetitle,$filetorrent,$filedescription,$filebanner)
 {
-	
+	// TODO: this function
+	// remember to update the parent mod's 'updated' field
 }
 	
-function getDownloads($moddir)
+function getFiles($gameid,$modid)
 {
-	$downloadsdir = "$moddir/downloads";
-	$downloads = array();
-	$downloadsopendir = opendir($downloadsdir);
-	while(($downloadid = readdir($downloadsopendir)) !== false)
+	$filesdir = "db/games/$gameid/mods/$modid/files";
+	$files =		array();
+	$filesopendir =	opendir($filesdir);
+	while(($fileid = readdir($filesopendir)) !== false)
 	{
-		if ($downloadid != "." && $downloadid != "..")
+		if ($fileid != "." && $fileid != "..")
 		{
-			$download = array();
+			$file = array();
 			$torrents = array();
 			
-			$downloaddir = "$downloadsdir/$downloadid";
+			$filedir = "$filesdir/$fileid";
 			
-			$downloadopendir = opendir($downloaddir);
+			$fileopendir = opendir($filedir);
 			
-			while(($file = readdir($downloadopendir)) !== false)
+			while(($file = readdir($fileopendir)) !== false)
 			{
 				if(strpos($file, '.torrent') !== false)
 				{
 					$torrent = array();
-					$torrent['dir'] = $file;
-					$filenoext = str_replace(".torrent","",$file);
-					$fileversion = str_replace("-","",substr($filenoext,strrpos($filenoext,"-")));
-					$filenoversion = str_replace("-","",str_replace("$fileversion","",$filenoext));
-					$torrent['version'] = $fileversion;
-					$torrent['name'] = $filenoversion;
+					$torrent['dir'] =		$file;
+					$filenoext =			str_replace(".torrent","",$file);
+					$fileversion =			str_replace("-","",substr($filenoext,strrpos($filenoext,"-")));
+					$filenoversion =		str_replace("-","",str_replace("$fileversion","",$filenoext));
+					$torrent['version'] =	$fileversion;
+					$torrent['name'] =		$filenoversion;
 					array_push($torrents, $torrent);
 				}
 			}
-			closedir($downloadopendir);
+			closedir($fileopendir);
 			
-			// Remember, the torrents for a single download are sorted here, not the downloads themselves
+			// Remember, the torrents for a single file are sorted here, not the files themselves
 			array_multisort(array_column($torrents,'version'),SORT_DESC,$torrents);
 			
-			// Add this download's torrents data to the array
-			$download['torrents'] = $torrents;
-			$download['banner'] = "$downloaddir/banner.png";
-			$downloaddatadir = "$downloaddir/data";
+			// Add this file's torrents data to the array
+			$file['torrents'] = $torrents;
+			$file['banner'] = "$filedir/banner.png";
+			$filedatadir = "$filedir/data";
 			
-			$downloaddatafile = fopen($downloaddatadir, "r");
+			$filedatafile = fopen($filedatadir, "r");
 			
-			while(!feof($downloaddatafile))
+			while(!feof($filedatafile))
 			{
-				$line = fgets($downloaddatafile);
-				if(strpos($line, 'type=') !== false)
-					$download['type'] = trim(str_replace("type=","",$line));
-				else if(strpos($line, 'name=') !== false)
-					$download['name'] = trim(str_replace("name=","",$line));
-				else if(strpos($line, 'description=') !== false)
-					$download['description'] = trim(str_replace("description=","",$line));
+				$line = fgets($filedatafile);
+				if		(strpos($line, 'type=')				!== false)
+					$file['type']			= trim(str_replace("type=",			"",$line));
+				else if	(strpos($line, 'name=')				!== false)
+					$file['name']			= trim(str_replace("name=",			"",$line));
+				else if	(strpos($line, 'description=')		!== false)
+					$file['description']	= trim(str_replace("description=",	"",$line));
 			}
-			fclose($downloaddatafile);
+			fclose($filedatafile);
 			
-			if($download['type'] == "main")
+			if($file['type'] == "main")
 			{
-				// Add the main download to the beginning of the downloads array
-				array_unshift($downloads,$download);
+				// Add the main file to the beginning of the files array
+				array_unshift($files,$file);
 			}
-			else if($download['type'] == "xtra")
+			else if($file['type'] == "xtra")
 			{
-				// Add the xtra download to the end of the downloads array
-				array_push($downloads,$download);
+				// Add the xtra file to the end of the files array
+				array_push($files,$file);
 			}
 		}
 	}
-	closedir($downloadsopendir);
+	closedir($filesopendir);
 	
-	return $downloads;
+	return $files;
 }
 
 ?>
