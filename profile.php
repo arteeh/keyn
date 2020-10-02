@@ -1,4 +1,4 @@
-<?php require 'top.php'; ?>
+<?php require 'shared/top.php'; ?>
 
 <div class="jumbotron my-4">
 	<h2 class="display-5">
@@ -6,4 +6,4 @@
 	</h2>
 </div>
 
-<?php require 'bot.php' ?>
+<?php require 'shared/bot.php' ?>

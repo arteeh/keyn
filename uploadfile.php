@@ -1,6 +1,6 @@
 <?php
-require_once 'libgame.php';
-require_once 'libmod.php';
+require_once 'shared/libgame.php';
+require_once 'shared/libmod.php';
 
 $modid = $_GET['modid'];
 $filetitle = $filetorrent = $filedescription = $filebanner = "";
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	createFile($modid,$filetitle,$filetorrent,$filedescription,$filebanner);
 }
 
-require_once 'top.php';
+require_once 'shared/top.php';
 
 ?>
 
@@ -92,4 +92,4 @@ $(".custom-file-input").on("change", function() {
 });
 </script>
 
-<?php require_once 'bot.php' ?>
+<?php require_once 'shared/bot.php' ?>

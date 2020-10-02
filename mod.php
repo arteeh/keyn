@@ -19,9 +19,9 @@ if(!is_dir($moddir))
 	die();
 }
 
-require_once 'top.php';
-require_once 'libmod.php';
-require_once 'libgame.php';
+require_once 'shared/top.php';
+require_once 'shared/libmod.php';
+require_once 'shared/libgame.php';
 
 $game = getGame($gameid);
 $mod = getMod($gameid,$modid);
@@ -163,4 +163,4 @@ $mod = getMod($gameid,$modid);
 	</div>
 </div>
 
-<?php require_once 'bot.php'; ?>
+<?php require_once 'shared/bot.php'; ?>

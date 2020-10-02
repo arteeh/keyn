@@ -10,9 +10,9 @@ if(!is_dir($gamedir))
 	die();
 }
 
-require_once 'top.php';
-require_once 'libgame.php';
-require_once 'libmod.php';
+require_once 'shared/top.php';
+require_once 'shared/libgame.php';
+require_once 'shared/libmod.php';
 
 // Get data from db
 $game = getGame($gameid);
@@ -196,7 +196,7 @@ else
 	</form>
 </div>
 
-<?php if($modslength > $limit) require 'pagination.php'; ?>
+<?php if($modslength > $limit) require 'shared/pagination.php'; ?>
 
 <div class="my-4 p-0">
 	<div class="row justify-content-center p-0">
@@ -246,6 +246,6 @@ else
 	</div>
 </div>
 
-<?php if($modslength > $limit) require 'pagination.php'; ?>
+<?php if($modslength > $limit) require 'shared/pagination.php'; ?>
 
-<?php require_once 'bot.php'; ?>
+<?php require_once 'shared/bot.php'; ?>

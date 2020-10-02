@@ -1,7 +1,7 @@
 <?php
 
-require_once 'top.php';
-require_once 'libusers.php';
+require_once 'shared/top.php';
+require_once 'shared/libusers.php';
 
 $usernameerror = $emailerror = $passworderror = $passwordverror = "";
 $username = $email = $password = $passwordv = "";
@@ -187,4 +187,4 @@ function testinput($data)
 
 </div>
 
-<?php require_once 'bot.php' ?>
+<?php require_once 'shared/bot.php' ?>

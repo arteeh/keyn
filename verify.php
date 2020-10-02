@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'libusers.php';
+require 'shared/libusers.php';
 
 // Check if the getters exist, otherwise error
 if(!isset($_GET['userid']) || !isset($_GET['token']))
@@ -17,7 +17,7 @@ $token = $_GET['token'];
 
 $status = verifyuser($userid, $token);
 
-require 'top.php';
+require 'shared/top.php';
 
 ?>
 
@@ -35,4 +35,4 @@ require 'top.php';
 	</h1>
 </div>
 
-<?php require 'bot.php'; ?>
+<?php require 'shared/bot.php'; ?>

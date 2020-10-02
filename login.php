@@ -1,5 +1,5 @@
 <?php
-require 'top.php';
+require 'shared/top.php';
 
 $login = $password = "";
 $loginerror = $passworderror = "";
@@ -122,4 +122,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	</form>
 </div>
 
-<?php require 'bot.php' ?>
+<?php require 'shared/bot.php' ?>

@@ -1,6 +1,6 @@
 <?php 
-require_once 'top.php';
-require_once 'libgame.php';
+require_once 'shared/top.php';
+require_once 'shared/libgame.php';
 
 $games = getGames();
 
@@ -60,4 +60,4 @@ $gameslength = count($games);
 	</div>
 </div>
 
-<?php require_once 'bot.php' ?>
+<?php require_once 'shared/bot.php' ?>
