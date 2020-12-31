@@ -9,7 +9,7 @@ $gameslength = count($games);
 
 <div class="jumbotron my-4">
 	<h2 class="display-5">
-		Keyndatabase is a website where you can find, upload and download video game mods.
+		Keyndb is a website where you can find, upload and download video game mods.
 	</h2>
 	<hr class="my-4">
 	<h5>

@@ -10,3 +10,7 @@
 - Enable the rewrite module (`sudo a2enmod rewrite`)
 - Enable the site (`sudo a2ensite keyn`)
 - Start or restart Apache (`sudo systemctl reload apache2`)
+
+### Other stuff
+
+Uses https://github.com/ForEvolve/bootstrap-dark

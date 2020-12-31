@@ -215,7 +215,7 @@ else
 				game=<?php echo $game['id']; ?>&
 				mod=<?php echo $mods[$i]['id']; ?>"
 			>
-				<div class="card m-1" style="width: 11.5rem;">
+				<div class="card text-dark m-1" style="width: 11.5rem;">
 					<object	class="card-img"
 							data="<?php echo $mods[$i]['logodir']; ?>"
 							type="image/webp"
@@ -225,8 +225,8 @@ else
 								alt="Mod logo"
 						>
 					</object>
-					<div class="card-body text-dark">
-						<h6 class="card-title ">
+					<div class="card-body">
+						<h6 class="card-title">
 							<?php echo $mods[$i]['name']; ?>
 						</h6>
 					</div>
