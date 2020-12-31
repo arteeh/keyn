@@ -2,7 +2,7 @@
 
 require_once 'shared/libmod.php';
 
-$gameid			= $modname		= $moddescription		= "";
+$gameid		= $modname	= $moddescription	= "";
 $gameiderror	= $modnameerror	= $moddescriptionerror	= "";
 
 // Check if something is in post already

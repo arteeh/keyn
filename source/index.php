@@ -9,7 +9,7 @@ $gameslength = count($games);
 
 <div class="jumbotron my-4">
 	<h2 class="display-5">
-		Keyndb is a website where you can find, upload and download video game mods.
+		Keyndatabase is a website where you can find, upload and download video game mods.
 	</h2>
 	<hr class="my-4">
 	<h5>
@@ -26,7 +26,7 @@ $gameslength = count($games);
 			<a class="item" href="game?game=<?php echo $games[$i]['id']; ?>" >
 				<div class="card text-dark m-1" style="width: 11.5rem;">
 					<object	class="card-img"
-							data="<?php echo "db/placeholdergame/logo.webp"; ?>"
+							data="<?php echo "database/placeholdergame/logo.webp"; ?>"
 							type="image/webp"
 					>
 						<img	class="card-img-top img-fluid"

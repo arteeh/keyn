@@ -1,7 +1,7 @@
 <?php
 
 $gameid = $_GET['game'];
-$gamedir = "db/games/$gameid";
+$gamedir = "database/games/$gameid";
 
 // Check if game and mod in GET exist to prevent issues
 if(!is_dir($gamedir))
@@ -43,7 +43,7 @@ $mod = getMod($gameid,$modid);
 
 <div class="card bg-light text-white my-4">
 	<object	class="card-img"
-			data="<?php echo "db/placeholdermod/banner.webp"; ?>"
+			data="<?php echo "database/placeholdermod/banner.webp"; ?>"
 			type="image/webp"
 	>
 		<img class="card-img" src="<?php echo $mod['bannerdir']; ?>" alt="Game banner image">

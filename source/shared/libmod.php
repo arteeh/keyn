@@ -4,7 +4,7 @@ function getMod($gameid,$modid)
 {
 	$mod = array();
 	
-	$moddir = "db/games/$gameid/mods/$modid";
+	$moddir = "database/games/$gameid/mods/$modid";
 	
 	$mod['id'] =				$modid;
 	$mod['logodir'] =			"$moddir/logo.webp";
@@ -38,7 +38,7 @@ function getMods($gameid)
 {
 	$mods = array();
 	
-	$gamedir = "db/games/$gameid";
+	$gamedir = "database/games/$gameid";
 	$modopendir = opendir("$gamedir/mods");
 	while (($modid = readdir($modopendir)) !== false)
 	{
@@ -56,7 +56,7 @@ function createMod($gameid,$modname,$moddescription)
 {
 	$modid = 0;
 	
-	$modsdir = "db/games/$gameid/mods";
+	$modsdir = "database/games/$gameid/mods";
 	
 	// Find an unused modid
 	$modsdirarray = array();
@@ -121,7 +121,7 @@ function createFile($modid,$filetitle,$filetorrent,$filedescription,$filebanner)
 	
 function getFiles($gameid,$modid)
 {
-	$filesdir = "db/games/$gameid/mods/$modid/files";
+	$filesdir = "database/games/$gameid/mods/$modid/files";
 	$files =		array();
 	$filesopendir =	opendir($filesdir);
 	while(($fileid = readdir($filesopendir)) !== false)

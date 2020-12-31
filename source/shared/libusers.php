@@ -20,7 +20,7 @@ function generateid()
 	$id = 0;
 	while(true)
 	{
-		if(!is_dir("db/users/$id")) break;
+		if(!is_dir("database/users/$id")) break;
 		$id++;
 	}
 	return $id;
@@ -31,10 +31,10 @@ function createuser($username, $email, $password)
 	$passwordhash = password_hash($password, PASSWORD_BCRYPT);
 	
 	$userid = generateid();
-	$userdir = "db/users/$userid";
+	$userdir = "database/users/$userid";
 	$userdatapath = "$userdir/data";
 	$useravatarpath = "$userdir/avatar.webp";
-	$useravatarpathplaceholder = "db/users/placeholderuser/avatar.webp";
+	$useravatarpathplaceholder = "database/users/placeholderuser/avatar.webp";
 	
 	mkdir($userdir);
 	
@@ -67,7 +67,7 @@ function verifyuser($userid, $token)
 	$comparetoken = hash('sha256', $userid);
 	if(hash_equals($token, $comparetoken))
 	{
-		$userdir = "db/users/$userid";
+		$userdir = "database/users/$userid";
 		
 		//check if the user exists
 		if(is_dir($userdir))

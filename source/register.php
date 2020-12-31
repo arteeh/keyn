@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 		}
 		
 		//check if username already exists
-		$allusers = array_diff(scandir("db/users/"),array('..','.'));
+		$allusers = array_diff(scandir("database/users/"),array('..','.'));
 		foreach($allusers as $thisuserpath)
 		{
-			$thisdatafile = fopen("db/users/$thisuserpath/data", "r");
+			$thisdatafile = fopen("database/users/$thisuserpath/data", "r");
 			while(!feof($thisdatafile))
 			{
 				$line = fgets($thisdatafile);

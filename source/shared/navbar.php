@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light">
 	<a class="navbar-brand" href="index">
-		<img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		<img src="images/logo-400.png" width="30" height="30" class="d-inline-block align-top" alt="">
 		Keyndb ALPHA
 	</a>
 	<button	class="navbar-toggler"

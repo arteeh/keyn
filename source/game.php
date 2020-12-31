@@ -1,7 +1,7 @@
 <?php
 
 $gameid = $_GET['game'];
-$gamedir = "db/games/$gameid";
+$gamedir = "database/games/$gameid";
 
 // Check if the game exists, otherwise error
 if(!is_dir($gamedir))
@@ -14,7 +14,7 @@ require_once 'shared/top.php';
 require_once 'shared/libgame.php';
 require_once 'shared/libmod.php';
 
-// Get data from db
+// Get data from database
 $game = getGame($gameid);
 $mods = getMods($game['id']);
 
@@ -125,7 +125,7 @@ else
 			data="<?php echo $game['bannerdir']; ?>"
 			type="image/webp"
 	>
-		<img class="card-img" src="<?php echo "db/placeholdergame/banner.webp"; ?>" alt="Game banner image">
+		<img class="card-img" src="<?php echo "database/placeholdergame/banner.webp"; ?>" alt="Game banner image">
 	</object>
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $game['name']; ?></h2>
@@ -220,7 +220,7 @@ else
 							data="<?php echo $mods[$i]['logodir']; ?>"
 							type="image/webp"
 					>
-						<img	src="<?php echo "db/placeholdermod/logo.webp"; ?>"
+						<img	src="<?php echo "database/placeholdermod/logo.webp"; ?>"
 								class="card-img-top"
 								alt="Mod logo"
 						>

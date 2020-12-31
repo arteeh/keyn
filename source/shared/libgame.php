@@ -4,7 +4,7 @@ function getGame($gameid)
 {
 	$game = array();
 	
-	$gamedir = "db/games/$gameid";
+	$gamedir = "database/games/$gameid";
 	
 	$game['id'] = $gameid;
 	$game['logopath'] = "$gamedir/logo.webp";
@@ -33,7 +33,7 @@ function getGames()
 {	
 	$games = array();
 	
-	$gameopendir = opendir("db/games");
+	$gameopendir = opendir("database/games");
 	while (($gameid = readdir($gameopendir)) !== false)
 	{
 		if (!is_dir($gameid))

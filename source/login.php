@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	
 	//check if login exists
 	$found = 0;
-	$allusers = array_diff(scandir("db/users/"),array('..','.'));
+	$allusers = array_diff(scandir("database/users/"),array('..','.'));
 	$userid = -1;
 	foreach($allusers as $thisuserpath)
 	{
-		$thisdatafile = fopen("db/users/$thisuserpath/data", "r");
+		$thisdatafile = fopen("database/users/$thisuserpath/data", "r");
 		while(!feof($thisdatafile))
 		{
 			$line = fgets($thisdatafile);
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	else
 	{
 		//check if password matches username		
-		$matcheddatafile = fopen("db/users/$userid/data", "r");
+		$matcheddatafile = fopen("database/users/$userid/data", "r");
 		while(!feof($matcheddatafile))
 		{
 			$line = fgets($matcheddatafile);
