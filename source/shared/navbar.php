@@ -55,7 +55,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="logout?from=<?phpecho $_SERVER['REQUEST_URI'];?>">Log out</a>
+				<a name="navtext" class="nav-link text-dark" href="logout?from=<?php echo $_SERVER['REQUEST_URI'];?>">Log out</a>
 			</li>
 		<?php
 		}
