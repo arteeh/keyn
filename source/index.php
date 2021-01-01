@@ -1,10 +1,11 @@
-<?php 
-require_once 'shared/top.php';
-require_once 'shared/libgame.php';
+<?php
 
-$games = getGames();
+include_once "shared/top.php";
+include_once "shared/database.php";
 
-$gameslength = count($games);
+$games = getFolderR("games",2);
+$gamescount = count($games);
+
 ?>
 
 <div class="jumbotron my-4">
@@ -20,20 +21,12 @@ $gameslength = count($games);
 <div class="my-4 p-0">
 	<div class="row justify-content-center p-0">
 		<?php
-		for($i = 0; $i < $gameslength; $i++)
+		for($i = 0; $i < $gamescount; $i++)
 		{
 			?>
-			<a class="item" href="game?game=<?php echo $games[$i]['id']; ?>" >
+			<a class="item" href="game?game=<?php echo $i; ?>" >
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<object	class="card-img"
-							data="<?php echo "database/placeholdergame/logo.webp"; ?>"
-							type="image/webp"
-					>
-						<img	class="card-img-top img-fluid"
-								src="<?php echo $games[$i]['logopath']; ?>"
-								alt="Game logo"
-						>
-					</object>
+					<img class="card-img-top img-fluid" src="<?php echo $games[$i]['logo']; ?>" alt="Game logo">
 					<div class="card-body">
 						<h5 class="card-title">
 							<?php echo $games[$i]['name']; ?>
@@ -60,4 +53,6 @@ $gameslength = count($games);
 	</div>
 </div>
 
-<?php require_once 'shared/bot.php' ?>
+<?php
+include_once "shared/bot.php";
+?>

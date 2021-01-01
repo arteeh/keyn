@@ -1,6 +1,6 @@
 <?php
 
-require_once 'shared/libmod.php';
+include_once "shared/database.php";
 
 $gameid		= $modname	= $moddescription	= "";
 $gameiderror	= $modnameerror	= $moddescriptionerror	= "";
@@ -38,8 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 	}
 }
 
-require_once 'shared/top.php';
-require_once 'shared/libgame.php';
+include_once 'shared/top.php';
 
 ?>
 
@@ -53,19 +52,19 @@ require_once 'shared/libgame.php';
 	>
 		<div class="form-group">
 			<select name="gameid" class="custom-select">
-				<option value="">
+				<option value="-1">
 					Game
 				</option>
 				<?php
+				$games = GetFolderR("games",2);
 				// Get all game names, ideally sorted by popularity
-				$games = getGames();
-				foreach($games as $game)
+				for($id = 0; $id < count($games); $id++)
 				{
+					$selected = "";
+					if(strval($id) == strval($gameid)) $selected = " selected";
+					echo "<option value='$id'$selected>";
+					echo $games[$id]["name"];
 					?>
-					<option	value="<?php echo $game['id']; ?>"
-							<?php if($game['id'] == $gameid) echo "selected"; ?>
-					>
-						<?php echo $game['name']; ?>
 					</option>
 					<?php
 				}
@@ -100,6 +99,6 @@ require_once 'shared/libgame.php';
 	</form>
 </div>
 
-<?php require_once 'shared/bot.php' ?>
+<?php include_once "shared/bot.php" ?>
 
 

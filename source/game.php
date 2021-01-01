@@ -1,28 +1,20 @@
 <?php
 
-$gameid = $_GET['game'];
-$gamedir = "database/games/$gameid";
+include_once "shared/database.php";
 
-// Check if the game exists, otherwise error
-if(!is_dir($gamedir))
-{
-	header("Location: error");
-	die();
-}
+$id = $_GET['game'];
+checkGame($id);
 
-require_once 'shared/top.php';
-require_once 'shared/libgame.php';
-require_once 'shared/libmod.php';
+include_once "shared/top.php";
 
 // Get data from database
-$game = getGame($gameid);
-$mods = getMods($game['id']);
+$game = getFolderR("games/$id",3);
 
 // Count the total amount of downloads for this game
-$totaldownloads = 0;
-foreach($mods as $mod)
+$downloadcount = 0;
+for($i = 0; $i < count($game["mods"]); $i++)
 {
-	$totaldownloads = $totaldownloads + intval($mod['downloads']);
+	$downloadcount = $downloadcount + intval($game["mods"][$i]["downloads"]);
 }
 
 // Check if the user is searching
@@ -41,28 +33,26 @@ if($issearching)
 	$hits = array();
 	$query = $_GET['query'];
 	
-	$modsinarray = count($mods);
+	$modsinarray = count($game["mods"]);
 	
-	foreach ($mods as $mod)
+	foreach ($game["mods"] as $mod)
 	{
 		if(strpos($mod['name'], $query) !== false)
 			array_push($hits, $mod);
 	}
 	$modslength = count($hits);
 }
-else $modslength = count($mods);
+else $modslength = count($game["mods"]);
 
 // Sort mods
 $sortby = "downloads";
 if(isset($_GET['sortby']))
 {
-	if($_GET['sortby'] == "")				$sortby = "downloads";
-	else if($_GET['sortby'] == "downloads")	$sortby = "downloads";
-	else if($_GET['sortby'] == "seeders")	$sortby = "seeders";
+	if($_GET['sortby'] == "seeders")	$sortby = "seeders";
 	else if($_GET['sortby'] == "updated")	$sortby = "updated";
 	else if($_GET['sortby'] == "released")	$sortby = "released";
 }
-array_multisort(array_column($mods, $sortby), SORT_DESC, SORT_NUMERIC, $mods);
+array_multisort(array_column($game["mods"], $sortby), SORT_DESC, SORT_NUMERIC, $game["mods"]);
 
 // Pagination
 $limit = 20;
@@ -116,17 +106,12 @@ else
 	<span class="my-auto">
 		Mods: <?php echo $modslength; ?>
 		&nbsp
-		Downloads: <?php echo $totaldownloads; ?>
+		Downloads: <?php echo $downloadcount; ?>
 	</span>
 </div>
 
 <div class="card text-white my-4">
-	<object	class="card-img"
-			data="<?php echo $game['bannerdir']; ?>"
-			type="image/webp"
-	>
-		<img class="card-img" src="<?php echo "database/placeholdergame/banner.webp"; ?>" alt="Game banner image">
-	</object>
+	<img class="card-img" src="<?php echo $game['banner']; ?>"></img>
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $game['name']; ?></h2>
 		<p class="card-text"><?php echo $game['description']; ?></p>
@@ -145,7 +130,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortby == "downloads") echo "active" ?>"
 				href="game?
-				game=<?php echo $game['id']; ?>&
+				game=<?php echo $id; ?>&
 				query=<?php echo $query; ?>&
 				sortby=downloads">
 				Downloads
@@ -153,7 +138,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortby == "seeders") echo "active" ?>"
 				href="game?
-				game=<?php echo $game['id']; ?>&
+				game=<?php echo $id; ?>&
 				query=<?php echo $query; ?>&
 				sortby=seeders">
 				Seeders
@@ -161,7 +146,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortby == "updated") echo "active" ?>"
 				href="game?
-				game=<?php echo $game['id']; ?>&
+				game=<?php echo $id; ?>&
 				query=<?php echo $query; ?>&
 				sortby=updated">
 				Updated
@@ -169,7 +154,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortby == "released") echo "active" ?>"
 				href="game?
-				game=<?php echo $game['id']; ?>&
+				game=<?php echo $id; ?>&
 				query=<?php echo $query; ?>&
 				sortby=released">
 				Released
@@ -184,7 +169,7 @@ else
 					size="14"
 					value="<?php if(($query !== "")) echo $query; ?>"
 					placeholder="exact hits please <3">
-			<input type="hidden" name="game" value="<?php echo $game['id']; ?>"/>
+			<input type="hidden" name="game" value="<?php echo $id; ?>"/>
 			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
 			<div class="input-group-append">
 				<button	type="submit"
@@ -209,32 +194,19 @@ else
 		for($i = $firsttoshow; $i < $lasttoshow; $i++)
 		{
 		?>
-			<a
-				class="item" 
-				href="mod?
-				game=<?php echo $game['id']; ?>&
-				mod=<?php echo $mods[$i]['id']; ?>"
-			>
+			<a class="item" href="mod?game=<?php echo $id; ?>&mod=<?php echo $i; ?>">
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<object	class="card-img"
-							data="<?php echo $mods[$i]['logodir']; ?>"
-							type="image/webp"
-					>
-						<img	src="<?php echo "database/placeholdermod/logo.webp"; ?>"
-								class="card-img-top"
-								alt="Mod logo"
-						>
-					</object>
+					<img class="card-img" src="<?php echo $game["mods"][$i]['logo']; ?>"></img>
 					<div class="card-body">
 						<h6 class="card-title">
-							<?php echo $mods[$i]['name']; ?>
+							<?php echo $game["mods"][$i]['name']; ?>
 						</h6>
 					</div>
 					<div class="card-footer">
 						<small class="text-muted">
-							<?php echo $mods[$i]['downloads']; ?>
+							<?php echo $game["mods"][$i]['downloads']; ?>
 							downloads, 
-							<?php echo $mods[$i]['seeders']; ?>
+							<?php echo $game["mods"][$i]['seeders']; ?>
 							seeders
 						</small>
 					</div>

@@ -1,35 +1,22 @@
 <?php
 
+include_once "shared/database.php";
+
 $gameid = $_GET['game'];
-$gamedir = "database/games/$gameid";
+checkGame($gameid);
 
-// Check if game and mod in GET exist to prevent issues
-if(!is_dir($gamedir))
-{
-	header("Location: error.php");
-	die();
-}
+$id = $_GET['mod'];
+checkMod($gameid,$id);
 
-$modid = $_GET['mod'];
-$moddir = "$gamedir/mods/$modid";
+include_once "shared/top.php";
 
-if(!is_dir($moddir))
-{
-	header("Location: error.php");
-	die();
-}
-
-require_once 'shared/top.php';
-require_once 'shared/libmod.php';
-require_once 'shared/libgame.php';
-
-$game = getGame($gameid);
-$mod = getMod($gameid,$modid);
+$game = getFolderR("games/$gameid",1);
+$mod = getFolderR("games/$gameid/mods/$id",5);
 
 ?>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<a href="game.php?game=<?php echo $game['id']; ?>" type="button" class="btn btn-primary">
+	<a href="game.php?game=<?php echo $gameid; ?>" type="button" class="btn btn-primary">
 		Back to <?php echo $game['name']; ?>
 	</a>
 	<span class="my-auto">
@@ -42,12 +29,7 @@ $mod = getMod($gameid,$modid);
 </div>
 
 <div class="card bg-light text-white my-4">
-	<object	class="card-img"
-			data="<?php echo "database/placeholdermod/banner.webp"; ?>"
-			type="image/webp"
-	>
-		<img class="card-img" src="<?php echo $mod['bannerdir']; ?>" alt="Game banner image">
-	</object>
+	<img class="card-img" src="<?php echo $mod['banner']; ?>" alt="Game banner image">
 	<div class="card-img-overlay text-shadow">
 		<h2 class="card-title"><?php echo $mod['name']; ?></h2>
 	</div>
@@ -77,70 +59,50 @@ $mod = getMod($gameid,$modid);
 		</li>
 	</ul>
 	<div class="tab-content">
-		<div	class="	tab-pane fade
-						border rounded-bottom border-top-0 p-3
-						show active"
-				id="description"
-				role="tabpanel"
-		>
-			<?php
-			$moddescriptionfile = fopen($mod['descriptiondir'], "r");
-			while(!feof($moddescriptionfile))
-				echo fgets($moddescriptionfile);
-			fclose($moddescriptionfile);
-			?>
+		<div class="tab-pane fade border rounded-bottom border-top-0 p-3 show active" id="description" role="tabpanel">
+			<?php echo $mod["description"];?>
 		</div>
-		<div	class="	tab-pane fade
-						border rounded-bottom border-top-0 p-3"
-				id="downloads"
-				role="tabpanel"
-		>
+		<div class="tab-pane fade border rounded-bottom border-top-0 p-3" id="downloads" role="tabpanel">
 			<?php
-			$files = getFiles($gameid,$modid);
 			$otherPrinted = 0;
-			if(count($files) == 0)
+			if(count($mod["torrents"]) == 0)
 			{
 				echo "<h4 class='mt-1'>This mod currently doesn't have any files.</h4>";
 			}
-			foreach($files as $file)
+			foreach($mod["torrents"] as $torrent)
 			{
-				if($file['type'] == 'main') echo "<h4 class='mt-1'>Main file</h4>";
-				else if($file['type'] == 'xtra' && $otherPrinted == 0)
+				if($torrent['type'] == 'main') echo "<h4 class='mt-1'>Main file</h4>";
+				else if($torrent['type'] == 'xtra' && $otherPrinted == 0)
 				{
 					echo "<h4>Other files</h4>";
 					$otherPrinted = 1;
 				}
 				?>
 				<div class="card my-4">
-					<img class="card-img-top" src="<?php echo $file['banner'] ?>" alt="">
+					<img class="card-img-top" src="<?php echo $torrent['banner'] ?>" alt="Torrent image">
 					<div class="card-body">
 						<h5 class="card-title">
-							<?php echo $file['name']; ?>
+							<?php echo $torrent['name']; ?>
 						</h5>
 						<p class="card-text">
-							<?php echo $file['description'] ?>
+							<?php echo $torrent['description'] ?>
 						</p>
 						<div class="btn-group">
-							<a href="<?php
-								// The 0 is not a bug. The download button returns the 0th torrent, which is the latest version
-								$filedir = "";
-								$dir = $file['torrents'][0]['dir'];
-								echo "$filedir/$dir";
-							?>" type="button" class="btn btn-primary">Download</a>
-							<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-								<span>
-									<?php echo $file['torrents'][0]['version']; ?>
-								</span>
+							<a	href="<?php echo $torrent['versions'][0]['torrent']; ?>"
+								type="button" class="btn btn-primary">Download</a>
+							<button	type="button"
+								class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+								data-toggle="dropdown">
+								<span><?php echo $torrent['versions'][0]['version']; ?></span>
 							</button>
 							<div class="dropdown-menu">
 								<?php
-								foreach($file['torrents'] as $torrent)
+								foreach($torrent["versions"] as $version)
 								{
-									?>
-									<a class='dropdown-item' href="<?php 
-										$dir = $torrent['dir'];
-										echo "$filedir/$dir" ?>">
-										<?php echo $torrent['version']; ?>
+								?>
+									<a	class='dropdown-item'
+										href="<?php echo $version["torrent"]; ?>">
+										<?php echo $version["version"] ?>
 									</a>
 								<?php
 								}
@@ -163,4 +125,4 @@ $mod = getMod($gameid,$modid);
 	</div>
 </div>
 
-<?php require_once 'shared/bot.php'; ?>
+<?php include_once "shared/bot.php"; ?>

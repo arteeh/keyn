@@ -6,28 +6,29 @@ function getMod($gameid,$modid)
 	
 	$moddir = "database/games/$gameid/mods/$modid";
 	
-	$mod['id'] =				$modid;
-	$mod['logodir'] =			"$moddir/logo.webp";
-	$mod['bannerdir'] =			"$moddir/banner.webp";
-	$mod['descriptiondir'] =	"$moddir/description";
+	$mod['id'] = $modid;
+	$mod['logodir'] = "$moddir/logo.webp";
+	$mod['bannerdir'] = "$moddir/banner.webp";
+	$mod['descriptiondir'] = "$moddir/description";
 	
 	$moddatadir = "$moddir/data";
 	$moddatafile = fopen($moddatadir, "r");
+	
 	while(!feof($moddatafile))
 	{
 		$line = fgets($moddatafile);
-		if		(strpos($line, 'name='		) !== false)
-			$mod['name']		= trim(str_replace("name=",		"",$line));
-		else if	(strpos($line, 'downloads='	) !== false)
-			$mod['downloads']	= trim(str_replace("downloads=","",$line));
-		else if	(strpos($line, 'seeders='	) !== false)
-			$mod['seeders']		= trim(str_replace("seeders=",	"",$line));
-		else if	(strpos($line, 'leechers='	) !== false)
-			$mod['leechers']	= trim(str_replace("leechers=",	"",$line));
-		else if	(strpos($line, 'updated='	) !== false)
-			$mod['updated']		= trim(str_replace("updated=",	"",$line));
-		else if	(strpos($line, 'released='	) !== false)
-			$mod['released']	= trim(str_replace("released=",	"",$line));
+		if(strpos($line,'name=') !== false)
+			$mod['name'] = trim(str_replace("name=","",$line));
+		else if	(strpos($line, 'downloads=') !== false)
+			$mod['downloads'] = trim(str_replace("downloads=","",$line));
+		else if	(strpos($line, 'seeders=') !== false)
+			$mod['seeders']	= trim(str_replace("seeders=","",$line));
+		else if	(strpos($line, 'leechers=') !== false)
+			$mod['leechers'] = trim(str_replace("leechers=","",$line));
+		else if	(strpos($line, 'updated=') !== false)
+			$mod['updated']	= trim(str_replace("updated=","",$line));
+		else if	(strpos($line, 'released=') !== false)
+			$mod['released'] = trim(str_replace("released=","",$line));
 	}
 	fclose($moddatafile);
 	
@@ -42,10 +43,7 @@ function getMods($gameid)
 	$modopendir = opendir("$gamedir/mods");
 	while (($modid = readdir($modopendir)) !== false)
 	{
-		if(!is_dir($modid))
-		{
-			array_push($mods,getMod($gameid,$modid));
-		}
+		if(!is_dir($modid)) array_push($mods,getMod($gameid,$modid));
 	}
 	closedir($modopendir);
 	
@@ -64,10 +62,7 @@ function createMod($gameid,$modname,$moddescription)
 	$modsopendir = opendir($modsdir);
 	while(($entry = readdir($modsopendir)) !== false)
 	{
-		if ($entry != "." && $entry != "..")
-		{
-			array_push($modsdirarray,$entry);
-		}
+		if ($entry != "." && $entry != "..") array_push($modsdirarray,$entry);
 	}
 	closedir($modsopendir);
 	
@@ -140,12 +135,12 @@ function getFiles($gameid,$modid)
 				if(strpos($file, '.torrent') !== false)
 				{
 					$torrent = array();
-					$torrent['dir'] =		$file;
-					$filenoext =			str_replace(".torrent","",$file);
-					$fileversion =			str_replace("-","",substr($filenoext,strrpos($filenoext,"-")));
-					$filenoversion =		str_replace("-","",str_replace("$fileversion","",$filenoext));
-					$torrent['version'] =	$fileversion;
-					$torrent['name'] =		$filenoversion;
+					$torrent['dir'] = $file;
+					$filenoext = str_replace(".torrent","",$file);
+					$fileversion = str_replace("-","",substr($filenoext,strrpos($filenoext,"-")));
+					$filenoversion = str_replace("-","",str_replace("$fileversion","",$filenoext));
+					$torrent['version'] = $fileversion;
+					$torrent['name'] = $filenoversion;
 					array_push($torrents, $torrent);
 				}
 			}
@@ -164,12 +159,12 @@ function getFiles($gameid,$modid)
 			while(!feof($filedatafile))
 			{
 				$line = fgets($filedatafile);
-				if		(strpos($line, 'type=')				!== false)
-					$file['type']			= trim(str_replace("type=",			"",$line));
-				else if	(strpos($line, 'name=')				!== false)
-					$file['name']			= trim(str_replace("name=",			"",$line));
-				else if	(strpos($line, 'description=')		!== false)
-					$file['description']	= trim(str_replace("description=",	"",$line));
+				if(strpos($line, 'type=') !== false)
+					$file['type'] = trim(str_replace("type=","",$line));
+				else if	(strpos($line, 'name=') !== false)
+					$file['name'] = trim(str_replace("name=","",$line));
+				else if	(strpos($line, 'description=') !== false)
+					$file['description'] = trim(str_replace("description=","",$line));
 			}
 			fclose($filedatafile);
 			
