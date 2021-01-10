@@ -20,3 +20,5 @@ require_once 'libusers.php';
 <div class="container-lg">
 
 <?php require_once 'navbar.php'; ?>
+
+<script	src="javascript/darkmode.js"></script>
