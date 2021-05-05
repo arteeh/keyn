@@ -1,5 +1,7 @@
 <?php
 
+include_once "Database.php";
+
 class Game extends Database
 {
 	private $mods			= array();
