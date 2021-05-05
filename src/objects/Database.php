@@ -15,7 +15,7 @@ class Database
 		return $content;
 	}
 	
-	public function loadObject($object,$id)
+	public function dLoad($object,$id)
 	{
 		$folder = array();	
 		
@@ -49,7 +49,7 @@ class Database
 		return $id;
 	}
 	
-	public function checkIfExists($object,$id)
+	public function dCheckIfExists($object,$id)
 	{
 		if(!is_dir("$this->directory/objects/$object/$this->id"))
 		{

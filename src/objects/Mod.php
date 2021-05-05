@@ -29,12 +29,12 @@ class Mod extends Database
 	
 	public function checkIfExists()
 	{
-		parent::checkIfExists("mods",$id);
+		parent::dCheckIfExists("mods",$id);
 	}
 	
 	public function load($id)
 	{
-		$folder = parent::loadObject("mods",$id);
+		$folder = parent::dLoad("mods",$id);
 		
 		$this->game				= game->load($folder["gameId"]);
 		$this->id				= $id;

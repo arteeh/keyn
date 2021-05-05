@@ -27,7 +27,7 @@ class Game extends Database
 	
 	public function checkIfExists()
 	{
-		parent::checkIfExists("games",$id);
+		parent::dCheckIfExists("games",$id);
 	}
 	
 	public function loadMods()
@@ -37,7 +37,7 @@ class Game extends Database
 	
 	public function load($id)
 	{
-		$folder = parent::loadObject("games",$id);
+		$folder = parent::dLoad("games",$id);
 		
 		$this->id				= $id;
 		$this->name				= $folder["name"];
