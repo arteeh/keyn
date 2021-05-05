@@ -1,5 +1,8 @@
 <?php
 
+include_once "Game.php";
+include_once "Mod.php";
+
 class Database
 {
 	private $directory	= "database";
