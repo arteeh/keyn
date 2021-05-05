@@ -1,7 +1,5 @@
 <?php
 
-include_once "../common/database.php";
-
 class Game
 {
 	private $mods			= array();

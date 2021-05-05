@@ -1,7 +1,7 @@
 <?php
 
-include_once "common/database.php";
 include_once "common/top.php";
+include_once "common/database.php";
 
 $games = getGameArray();
 $gamesCount = count($games);

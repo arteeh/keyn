@@ -1,7 +1,5 @@
 <?php
 
-include_once "database.php";
-
 class User
 {
 	private $id			= 404;
