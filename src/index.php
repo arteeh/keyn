@@ -2,8 +2,9 @@
 
 include_once "common/top.php";
 
-$games = getFolderR("games",2);
-$gamescount = count($games);
+$database = new Database();
+$games = $database->getGameArray();
+$gamesCount = count($games);
 
 ?>
 
@@ -20,27 +21,27 @@ $gamescount = count($games);
 <div class="my-4 p-0">
 	<div class="row justify-content-center p-0">
 		<?php
-		for($i = 0; $i < $gamescount; $i++)
+		for($i = 0; $i < $gamesCount; $i++)
 		{
 			?>
 			<a class="item" href="game?game=<?php echo $i; ?>" >
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<img class="card-img-top img-fluid" src="<?php echo $games[$i]['logo']; ?>" alt="Game logo">
+					<img class="card-img-top img-fluid" src="<?php echo $games[$i]->getLogo(); ?>" alt="Game logo">
 					<div class="card-body">
 						<h5 class="card-title">
-							<?php echo $games[$i]['name']; ?>
+							<?php echo $games[$i]->getName(); ?>
 						</h5>
 						<!--
 						<p class="card-text">
-							<?php echo $games[$i]['description']; ?>
+							<?php echo $games[$i]->getDescription(); ?>
 						</p>
 						-->
 					</div>
 					<div class="card-footer">
 						<small class="text-muted">
-							<?php echo $games[$i]['modcount']; ?>
+							<?php echo $games[$i]->getModCount(); ?>
 							mods, 
-							<?php echo $games[$i]['downloads']; ?>
+							<?php echo $games[$i]->getDownloadCount(); ?>
 							downloads
 						</small>
 					</div>
@@ -53,5 +54,7 @@ $gamescount = count($games);
 </div>
 
 <?php
-include_once "shared/bot.php";
+
+include_once "common/bot.php";
+
 ?>

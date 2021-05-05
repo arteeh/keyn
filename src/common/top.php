@@ -1,4 +1,10 @@
 <?php
+
+include_once "../objects/Database.php";
+include_once "../objects/Game.php";
+include_once "../objects/Mod.php";
+include_once "../objects/User.php";
+
 session_start();
 
 // If loggedin var is not set, set to 0
