@@ -2,7 +2,7 @@
 
 class Database
 {
-	private $directory	= "../database";
+	private $directory	= "database";
 	
 	private function readData($path)
 	{
