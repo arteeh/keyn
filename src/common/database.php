@@ -5,14 +5,6 @@ include_once "objects/Mod.php";
 
 $directory = "database";
 
-function readData($path)
-{
-	$file = fopen($path,"r");
-	$content = fread($file,filesize($path));
-	fclose($file);
-	return $content;
-}
-
 function load($object,$id)
 {
 	GLOBAL $directory;
@@ -28,7 +20,9 @@ function load($object,$id)
 			
 			if ($file != "." && $file != "..")
 			{
-				$folder["$file"] = getData($filepath);
+				$file = fopen($path,"r");
+				$folder["$file"] = fread($file,filesize($path));
+				fclose($file);
 			}
 		}
 	}
