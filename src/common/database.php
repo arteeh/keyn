@@ -47,7 +47,7 @@ function generateId($object)
 	return $id;
 }
 
-function dCheckIfExists($object,$id)
+function checkIfExists($object,$id)
 {
 	if(!is_dir("$directory/objects/$object/$id"))
 	{

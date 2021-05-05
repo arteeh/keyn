@@ -2,7 +2,7 @@
 
 include_once "database.php";
 
-class User extends Database
+class User
 {
 	private $id			= 404;
 	private $name		= "NO NAME";
@@ -12,12 +12,12 @@ class User extends Database
 	
 	public function checkIfExists()
 	{
-		parent::checkIfExists("users",$id);
+		checkIfExists("users",$id);
 	}
 	
 	public function load($id)
 	{
-		$folder = parent::load("users",$id);
+		$folder = load("users",$id);
 		
 		$this->id			= $id;
 		$this->name			= $folder["name"];

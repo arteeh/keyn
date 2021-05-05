@@ -1,8 +1,8 @@
 <?php
 
-include_once "database.php";
+include_once "../common/database.php";
 
-class Mod extends Database
+class Mod
 {
 	private $game;
 	private $id				= 404;
@@ -29,12 +29,12 @@ class Mod extends Database
 	
 	public function checkIfExists()
 	{
-		parent::dCheckIfExists("mods",$id);
+		checkIfExists("mods",$id);
 	}
 	
 	public function load($id)
 	{
-		$folder = parent::dLoad("mods",$id);
+		$folder = load("mods",$id);
 		
 		$this->game				= new Game();
 		$this->id				= $id;
