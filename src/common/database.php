@@ -3,7 +3,7 @@
 include_once "objects/Game.php";
 include_once "objects/Mod.php";
 
-global $directory = "database";
+$directory = "database";
 
 function readData($path)
 {
@@ -58,6 +58,8 @@ function checkIfExists($object,$id)
 
 function getGameArray()
 {
+	GLOBAL $directory;
+	
 	$gameArray = array();
 	
 	$gameOpenDir = opendir("$directory/objects/games");
