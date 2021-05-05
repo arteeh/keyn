@@ -28,7 +28,7 @@ class Database
 				
 				if ($file != "." && $file != "..")
 				{
-					$folder["$file"] = this->getData($filepath);
+					$folder["$file"] = $this->getData($filepath);
 				}
 			}
 		}
