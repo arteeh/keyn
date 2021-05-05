@@ -59,7 +59,7 @@ class Database
 	{	
 		$gameArray = array();
 		
-		$gameOpenDir = opendir("$this->directory/games");
+		$gameOpenDir = opendir("$this->directory/objects/games");
 		while (($id = readdir($gameOpenDir)) !== false)
 		{
 			if (!is_dir($id))
