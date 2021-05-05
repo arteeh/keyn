@@ -16,7 +16,8 @@ class Database
 	{
 		$folder = array();	
 		
-		if($files = scandir("$directory/objects/$object/$id"))
+		$dir = "$this->directory/objects/$object/$id";
+		if($files = scandir($dir))
 		{
 			foreach($files as $file)
 			{
@@ -38,7 +39,7 @@ class Database
 		
 		while(true)
 		{
-			if(!is_dir("$directory/objects/$object/$id")) break;
+			if(!is_dir("$this->directory/objects/$object/$id")) break;
 			$id++;
 		}
 		
@@ -47,8 +48,7 @@ class Database
 	
 	public function checkIfExists($object,$id)
 	{
-		$i = $this->id;
-		if(!is_dir("$this->directory/objects/$object/$i"))
+		if(!is_dir("$this->directory/objects/$object/$this->id"))
 		{
 			header("Location: error");
 			die();
@@ -85,7 +85,7 @@ class Database
 	{
 		$modArray = array();
 		
-		$modOpenDir = opendir("$directory/objects/mods");
+		$modOpenDir = opendir("$this->directory/objects/mods");
 		while (($id = readdir($modOpenDir)) !== false)
 		{
 			if(!is_dir($id))
