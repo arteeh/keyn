@@ -1,6 +1,6 @@
 <?php
 
-include_once "Database.php";
+include_once "database.php";
 
 class Game extends Database
 {

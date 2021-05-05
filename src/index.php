@@ -1,11 +1,9 @@
 <?php
 
-include_once "objects/Database.php";
-
+include_once "common/database.php";
 include_once "common/top.php";
 
-$database = new Database();
-$games = $database->getGameArray();
+$games = getGameArray();
 $gamesCount = count($games);
 
 ?>
