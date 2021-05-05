@@ -3,7 +3,7 @@
 include_once "objects/Game.php";
 include_once "objects/Mod.php";
 
-global $directory	= "database";
+global $directory = "database";
 
 function readData($path)
 {
