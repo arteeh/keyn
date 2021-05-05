@@ -57,10 +57,12 @@ function checkIfExists($object,$id)
 }
 
 function getGameArray()
-{	
+{
+	$d = $directory;
+	
 	$gameArray = array();
 	
-	$gameOpenDir = opendir("$directory/objects/games");
+	$gameOpenDir = opendir("$d/objects/games");
 	while (($id = readdir($gameOpenDir)) !== false)
 	{
 		if (!is_dir($id))
