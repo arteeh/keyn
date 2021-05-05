@@ -48,7 +48,7 @@ class Database
 	public function checkIfExists($object,$id)
 	{
 		$i = $this->id;
-		if(!is_dir("$directory/objects/$object/$i"))
+		if(!is_dir("$this->directory/objects/$object/$i"))
 		{
 			header("Location: error");
 			die();
@@ -59,7 +59,7 @@ class Database
 	{	
 		$gameArray = array();
 		
-		$gameOpenDir = opendir("$directory/games");
+		$gameOpenDir = opendir("$this->directory/games");
 		while (($id = readdir($gameOpenDir)) !== false)
 		{
 			if (!is_dir($id))
