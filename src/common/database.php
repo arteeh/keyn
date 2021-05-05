@@ -15,6 +15,8 @@ function readData($path)
 
 function load($object,$id)
 {
+	GLOBAL $directory;
+	
 	$folder = array();	
 	
 	$dir = "$directory/objects/$object/$id";
@@ -36,6 +38,8 @@ function load($object,$id)
 
 function generateId($object)
 {
+	GLOBAL $directory;
+	
 	$id = 0;
 
 	while(true)
@@ -49,6 +53,8 @@ function generateId($object)
 
 function checkIfExists($object,$id)
 {
+	GLOBAL $directory;
+	
 	if(!is_dir("$directory/objects/$object/$id"))
 	{
 		header("Location: error");
@@ -86,6 +92,8 @@ function getGameArray()
 
 function getModArray($gameId)
 {
+	GLOBAL $directory;
+	
 	$modArray = array();
 	
 	$modOpenDir = opendir("$directory/objects/mods");
