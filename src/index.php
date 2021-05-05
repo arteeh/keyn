@@ -1,7 +1,6 @@
 <?php
 
-include_once "shared/top.php";
-include_once "shared/database.php";
+include_once "common/top.php";
 
 $games = getFolderR("games",2);
 $gamescount = count($games);

@@ -1,21 +1,10 @@
 <?php
 
-include_once "shared/database.php";
+$game = new Game();
+$game->load($_GET['game']);
+$game->checkIfExists();
 
-$id = $_GET['game'];
-checkGame($id);
-
-include_once "shared/top.php";
-
-// Get data from database
-$game = getFolderR("games/$id",3);
-
-// Count the total amount of downloads for this game
-$downloadcount = 0;
-for($i = 0; $i < count($game["mods"]); $i++)
-{
-	$downloadcount = $downloadcount + intval($game["mods"][$i]["downloads"]);
-}
+include_once "common/top.php";
 
 // Check if the user is searching
 $issearching = 0;
@@ -42,7 +31,10 @@ if($issearching)
 	}
 	$modslength = count($hits);
 }
-else $modslength = count($game["mods"]);
+else
+{
+	$modslength = count($game["mods"]);
+}
 
 // Sort mods
 $sortby = "downloads";

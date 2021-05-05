@@ -12,4 +12,5 @@ session_destroy();
 $prev = trim($_GET['from'],"/");
 header("Location: $prev");
 die();
+
 ?>

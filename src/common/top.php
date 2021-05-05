@@ -7,7 +7,6 @@ if(!isset($_SESSION["loggedin"])) $_SESSION["loggedin"] = 0;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once 'libusers.php';
 ?>
 
 <!doctype html>
