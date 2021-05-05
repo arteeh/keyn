@@ -4,7 +4,7 @@ include_once "Database.php";
 
 class Mod extends Database
 {
-	private $game			= new Game();
+	private $game;
 	private $id				= 404;
 	private $name			= "NO NAME";
 	private $description	= "NO DESCRIPTION";
@@ -36,7 +36,7 @@ class Mod extends Database
 	{
 		$folder = parent::dLoad("mods",$id);
 		
-		$this->game				= game->load($folder["gameId"]);
+		$this->game				= new Game();
 		$this->id				= $id;
 		$this->name				= $folder["name"];
 		$this->description		= $folder["description"];
@@ -47,6 +47,8 @@ class Mod extends Database
 		$this->leecherCount		= $folder["leecherCount"];
 		$this->releaseDate		= $folder["releaseDate"];
 		$this->updateDate		= $folder["updateDate"];
+		
+		this->game->load($folder["gameId"]);
 	}
 	
 	public function save()
