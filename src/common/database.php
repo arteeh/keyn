@@ -20,8 +20,8 @@ function load($object,$id)
 			
 			if ($file != "." && $file != "..")
 			{
-				$file = fopen($path,"r");
-				$folder["$file"] = fread($file,filesize($path));
+				$file = fopen($filepath,"r");
+				$folder["$file"] = fread($file,filesize($filepath));
 				fclose($file);
 			}
 		}
