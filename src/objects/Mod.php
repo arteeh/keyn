@@ -34,7 +34,7 @@ class Mod extends Database
 	
 	public function load($id)
 	{
-		$folder = parent::load("mods",$id);
+		$folder = parent::loadObject("mods",$id);
 		
 		$this->game				= game->load($folder["gameId"]);
 		$this->id				= $id;

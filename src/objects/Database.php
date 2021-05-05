@@ -15,7 +15,7 @@ class Database
 		return $content;
 	}
 	
-	public function load($object,$id)
+	public function loadObject($object,$id)
 	{
 		$folder = array();	
 		

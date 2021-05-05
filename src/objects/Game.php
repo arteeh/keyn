@@ -37,7 +37,7 @@ class Game extends Database
 	
 	public function load($id)
 	{
-		$folder = parent::load("games",$id);
+		$folder = parent::loadObject("games",$id);
 		
 		$this->id				= $id;
 		$this->name				= $folder["name"];
