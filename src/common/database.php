@@ -21,7 +21,9 @@ function load($object,$id)
 			if ($file != "." && $file != "..")
 			{
 				$file = fopen($filepath,"r");
+				
 				$folder["$file"] = fread($file,filesize($filepath));
+				print("saving $folder['$file'] to $filepath");
 				fclose($file);
 			}
 		}
