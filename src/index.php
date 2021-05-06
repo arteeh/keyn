@@ -1,10 +1,13 @@
 <?php
 
-include_once "common/top.php";
 include_once "common/database.php";
+include_once "common/top.php";
 
-$games = getGameArray();
-$gamesCount = count($games);
+$gameArray = getGameArray();
+$gameArrayCount = count($gameArray);
+
+// Sort array by downloads, descending
+$gameArray = sortObjectArray($gameArray,"downloadCount",true);
 
 ?>
 
@@ -21,33 +24,28 @@ $gamesCount = count($games);
 <div class="my-4 p-0">
 	<div class="row justify-content-center p-0">
 		<?php
-		for($i = 0; $i < $gamesCount; $i++)
+		for($i = 0; $i < $gameArrayCount; $i++)
 		{
 			?>
-			<a class="item" href="game?game=<?php echo $i; ?>" >
+			<a class="item" href="game?game=<?=$i?>" >
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<img class="card-img-top img-fluid" src="<?php echo $games[$i]->getLogo(); ?>" alt="Game logo">
+					<img class="card-img-top img-fluid" src="<?=$gameArray[$i]->getLogo()?>" alt="Game logo">
 					<div class="card-body">
 						<h5 class="card-title">
-							<?php echo $games[$i]->getName(); ?>
+							<?=$gameArray[$i]->getName()?>
 						</h5>
-						<!--
-						<p class="card-text">
-							<?php echo $games[$i]->getDescription(); ?>
-						</p>
-						-->
 					</div>
 					<div class="card-footer">
 						<small class="text-muted">
-							<?php echo $games[$i]->getModCount(); ?>
+							<?=$gameArray[$i]->getModCount()?>
 							mods, 
-							<?php echo $games[$i]->getDownloadCount(); ?>
+							<?=$gameArray[$i]->getDownloadCount()?>
 							downloads
 						</small>
 					</div>
 				</div>
 			</a>
-		<?php
+			<?php
 		}
 		?>
 	</div>

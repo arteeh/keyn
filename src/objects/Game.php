@@ -2,7 +2,7 @@
 
 class Game
 {
-	private $mods			= array();
+	private $modArray		= array();
 	private $id				= 404;
 	private $name			= "NO NAME";
 	private $description	= "NO DESCRIPTION";
@@ -12,25 +12,49 @@ class Game
 	private $seederCount	= 404;
 	private $leecherCount	= 404;
 	private $modCount		= 404;
-	
-	public function getId()				{ echo $this->id; }
-	public function getName()			{ echo $this->name; }
-	public function getDescription()	{ echo $this->description; }
-	public function getLogo()			{ echo "$directory/files/media/$this->logo"; }
-	public function getBanner()			{ echo "$directory/files/media/$this->banner"; }
-	public function getDownloadCount()	{ echo $this->downloadCount; }
-	public function getSeederCount()	{ echo $this->seederCount; }
-	public function getLeecherCount()	{ echo $this->leecherCount; }
-	public function getModCount()		{ echo $this->modCount; }
-	
-	public function checkIfExists()
+
+	public function getModArray()			{ return $this->modArray; }
+	public function getId()					{ return $this->id; }
+	public function getName()				{ return $this->name; }
+	public function getDescription()		{ return $this->description; }
+	public function getDownloadCount()		{ return $this->downloadCount; }
+	public function getSeederCount()		{ return $this->seederCount; }
+	public function getLeecherCount()		{ return $this->leecherCount; }
+	public function getModCount()			{ return $this->modCount; }
+	public function getLogo()
 	{
-		checkIfExists("games",$id);
+		$retVal = $GLOBALS['directory'];
+		$retVal .= "/files/media/$this->logo";
+		return $retVal;
+	}
+	public function getBanner()
+	{
+		$retVal = $GLOBALS['directory'];
+		$retVal .= "/files/media/$this->banner";
+		return $retVal;
 	}
 	
-	public function loadMods()
+	public function loadModArray()
 	{
+		$modPath = $GLOBALS['directory'];
+		$modPath .= "/objects/mods";
+		$modOpenDir = opendir($modPath);
 		
+		while(($id = readdir($modOpenDir)) !== false)
+		{
+			if(!is_dir($id))
+			{
+				$m = new Mod();
+				$m->load($id);
+				
+				if(intval($m->getGameId()) == intval($this->id))
+				{
+					array_push($this->modArray,$m);
+				}
+			}
+		}
+		
+		closedir($modOpenDir);
 	}
 	
 	public function load($id)
@@ -51,6 +75,45 @@ class Game
 	public function save()
 	{
 		
+	}
+	
+	public function toString()
+	{
+		$string = "<br>Game:<br>";
+		
+		$string .= "id: ";
+		$string .= $this->id;
+		$string .= "<br>";
+		
+		$string .= "name: ";
+		$string .= $this->name;
+		$string .= "<br>";
+		
+		$string .= "logo: ";
+		$string .= $this->logo;
+		$string .= "<br>";
+		
+		$string .= "banner: ";
+		$string .= $this->banner;
+		$string .= "<br>";
+		
+		$string .= "downloads: ";
+		$string .= $this->downloadCount;
+		$string .= "<br>";
+		
+		$string .= "seeders: ";
+		$string .= $this->seederCount;
+		$string .= "<br>";
+		
+		$string .= "leechers: ";
+		$string .= $this->leecherCount;
+		$string .= "<br>";
+		
+		$string .= "mods: ";
+		$string .= $this->modCount;
+		$string .= "<br>";
+		
+		return $string;
 	}
 }
 

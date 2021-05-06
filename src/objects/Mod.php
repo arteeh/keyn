@@ -14,20 +14,26 @@ class Mod
 	private $releaseDate	= 404;
 	private $updateDate		= 404;
 	
-	public function getGameId()			{ echo $this->game.getId(); }
-	public function getId()				{ echo $this->id; }
-	public function getName()			{ echo $this->name; }
-	public function getDescription()	{ echo $this->description; }
-	public function getLogo()			{ echo "$directory/files/media/$this->logo"; }
-	public function getBanner()			{ echo "$directory/files/media/$this->banner"; }
-	public function getDownloadCount()	{ echo $this->downloadCount; }
-	public function getSeederCount()	{ echo $this->seederCount; }
-	public function getLeecherCount()	{ echo $this->leecherCount; }
-	public function getModCount()		{ echo $this->modCount; }
-	
-	public function checkIfExists()
+	public function getGameId()			{ return $this->game->getId(); }
+	public function getId()				{ return $this->id; }
+	public function getName()			{ return $this->name; }
+	public function getDescription()	{ return $this->description; }
+	public function getDownloadCount()	{ return $this->downloadCount; }
+	public function getSeederCount()	{ return $this->seederCount; }
+	public function getLeecherCount()	{ return $this->leecherCount; }
+	public function getReleaseDate()	{ return $this->releaseDate; }
+	public function getUpdateDate()		{ return $this->updateDate; }
+	public function getLogo()
 	{
-		checkIfExists("mods",$id);
+		$retVal = $GLOBALS['directory'];
+		$retVal .= "/files/media/$this->logo";
+		return $retVal;
+	}
+	public function getBanner()
+	{
+		$retVal = $GLOBALS['directory'];
+		$retVal .= "/files/media/$this->banner";
+		return $retVal;
 	}
 	
 	public function load($id)
@@ -46,12 +52,55 @@ class Mod
 		$this->releaseDate		= $folder["releaseDate"];
 		$this->updateDate		= $folder["updateDate"];
 		
-		this->game->load($folder["gameId"]);
+		$this->game->load($folder["gameId"]);
 	}
 	
 	public function save()
 	{
 		
+	}
+	
+	public function toString()
+	{
+		$string = "<br>Mod:<br>";
+		
+		$string .= "id: ";
+		$string .= $this->id;
+		$string .= "<br>";
+		
+		$string .= "name: ";
+		$string .= $this->name;
+		$string .= "<br>";
+		
+		$string .= "logo: ";
+		$string .= $this->logo;
+		$string .= "<br>";
+		
+		$string .= "banner: ";
+		$string .= $this->banner;
+		$string .= "<br>";
+		
+		$string .= "downloads: ";
+		$string .= $this->downloadCount;
+		$string .= "<br>";
+		
+		$string .= "seeders: ";
+		$string .= $this->seederCount;
+		$string .= "<br>";
+		
+		$string .= "leechers: ";
+		$string .= $this->leecherCount;
+		$string .= "<br>";
+		
+		$string .= "released: ";
+		$string .= $this->releaseDate;
+		$string .= "<br>";
+		
+		$string .= "updated: ";
+		$string .= $this->updateDate;
+		$string .= "<br>";
+		
+		return $string;
 	}
 }
 

@@ -14,16 +14,13 @@ function load($object,$id)
 	$dir = "$directory/objects/$object/$id";
 	if($files = scandir($dir))
 	{
-		foreach($files as $file)
+		foreach($files as $filename)
 		{
-			$filepath = "$dir/$file";
-			
-			if ($file != "." && $file != "..")
+			$filepath = "$dir/$filename";
+			if ($filename != "." && $filename != "..")
 			{
 				$file = fopen($filepath,"r");
-				
-				$folder["$file"] = fread($file,filesize($filepath));
-				print("saving $folder['$file'] to $filepath");
+				$folder["$filename"] = fread($file,filesize($filepath));
 				fclose($file);
 			}
 		}
@@ -58,6 +55,18 @@ function checkIfExists($object,$id)
 	}
 }
 
+// https://stackoverflow.com/questions/4282413/sort-array-of-objects-by-object-fields
+function sortObjectArray($array,$value,$descending)
+{
+	usort($array,function($a,$b)
+	{
+		if($descending) return $a->$value < $b->$value;
+		else			return $a->$value > $b->$value;
+	});
+	
+	return $array;
+}
+
 function getGameArray()
 {
 	GLOBAL $directory;
@@ -76,39 +85,7 @@ function getGameArray()
 	}
 	closedir($gameOpenDir);
 
-	// Sort array by downloads, descending
-	// https://stackoverflow.com/questions/4282413/sort-array-of-objects-by-object-fields
-	usort($gameArray,function($a,$b)
-	{
-		return $a->downloads < $b->downloads;
-	});
-
 	return $gameArray;
-}
-
-function getModArray($gameId)
-{
-	GLOBAL $directory;
-	
-	$modArray = array();
-	
-	$modOpenDir = opendir("$directory/objects/mods");
-	while (($id = readdir($modOpenDir)) !== false)
-	{
-		if(!is_dir($id))
-		{
-			$m = new Mod();
-			$m->load($id);
-			
-			if($m->getGameId() == $gameId)
-			{
-				array_push($modArray,$m);
-			}
-		}
-	}
-	closedir($modOpenDir);
-	
-	return $modArray;
 }
 
 ?>

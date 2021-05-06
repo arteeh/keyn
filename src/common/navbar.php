@@ -13,7 +13,7 @@
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
 				<a name="navtext" class="nav-link text-dark" href="
-					https://trello.com/b/C4gNR6Fs">
+					https://github.com/arteeh/keyn/projects/1">
 					Feature requests
 				</a>
 			</li>

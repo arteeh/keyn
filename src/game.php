@@ -1,86 +1,82 @@
 <?php
 
-$game = new Game();
-$game->load($_GET['game']);
-$game->checkIfExists();
+include_once "common/database.php";
+
+//checkIfExists("games",$_GET['game']);
 
 include_once "common/top.php";
 
-// Check if the user is searching
-$issearching = 0;
-$query = "";
-if(isset($_GET['query']))
-{
-	if($_GET['query'] != "")
-	{
-		$issearching = 1;
-	}
-}
+$game = new Game();
+$game->load($_GET['game']);
+$game->loadModArray();
 
-if($issearching)
+$filteredModArray = array();
+$filteredModCount = 404;
+
+// Check if the user is searching
+$isSearching = 0;
+$query = "";
+if(isset($_GET['query']) && $_GET['query'] != "")
 {
-	$hits = array();
+	$isSearching = 1;
 	$query = $_GET['query'];
-	
-	$modsinarray = count($game["mods"]);
-	
-	foreach ($game["mods"] as $mod)
+	foreach ($game->getModArray() as $mod)
 	{
-		if(strpos($mod['name'], $query) !== false)
-			array_push($hits, $mod);
+		if(strpos($mod->getName(), $query) !== false)
+		{
+			array_push($filteredModArray, $mod);
+		}
 	}
-	$modslength = count($hits);
+	$filteredModCount = count($filteredModArray);
 }
 else
 {
-	$modslength = count($game["mods"]);
+	$filteredModArray = $game->getModArray();
+	$filteredModCount = $game->GetModCount();
 }
 
 // Sort mods
-$sortby = "downloads";
-if(isset($_GET['sortby']))
-{
-	if($_GET['sortby'] == "seeders")	$sortby = "seeders";
-	else if($_GET['sortby'] == "updated")	$sortby = "updated";
-	else if($_GET['sortby'] == "released")	$sortby = "released";
-}
-array_multisort(array_column($game["mods"], $sortby), SORT_DESC, SORT_NUMERIC, $game["mods"]);
+$sortBy = "downloadCount";
+if(isset($_GET['sortBy'])) $sortBy = $_GET['sortBy'];
+$filteredModArray = sortObjectArray($filteredModArray,$sortBy,true);
 
 // Pagination
+
 $limit = 20;
 // How may adjacent page links should be shown on each side of the current page link.
 $adjacents = 1;
-$total_pages = ceil($modslength / $limit);
+$totalPages = ceil($filteredModCount / $limit);
 
 if(isset($_GET['page']) && $_GET['page'] != "")
 {
 	$page = $_GET['page'];
-	$offset = $limit * ($page-1);
+	$offset = $limit * ($page - 1);
 }
 else
 {
 	$page = 1;
 	$offset = 0;
 }
+
 // Here we generate the range of the page numbers which will display.
-if($total_pages <= (1+($adjacents * 2)))
+if($totalPages <= (1 + ($adjacents * 2)))
 {
 	$start = 1;
-	$end   = $total_pages;
+	$end   = $totalPages;
 }
 else
 {
 	if(($page - $adjacents) > 1)
 	{
-		if(($page + $adjacents) < $total_pages)
+		if(($page + $adjacents) < $totalPages)
 		{ 
 			$start = ($page - $adjacents);
 			$end   = ($page + $adjacents);
 		}
 		else
 		{
-			$start = ($total_pages - (1+($adjacents*2)));
-			$end   = $total_pages;
+			$start = ($totalPages - (1+($adjacents*2)));
+			$end   = $totalPages;
 		}
 	}
 	else
@@ -96,17 +92,17 @@ else
 		Back home
 	</a>
 	<span class="my-auto">
-		Mods: <?php echo $modslength; ?>
+		Mods: <?=$game->getModCount()?>
 		&nbsp
-		Downloads: <?php echo $downloadcount; ?>
+		Downloads: <?=$game->getDownloadCount()?>
 	</span>
 </div>
 
 <div class="card text-white my-4">
-	<img class="card-img" src="<?php echo $game['banner']; ?>"></img>
+	<img class="card-img" src="<?=$game->getBanner()?>"></img>
 	<div class="card-img-overlay text-shadow">
-		<h2 class="card-title"><?php echo $game['name']; ?></h2>
-		<p class="card-text"><?php echo $game['description']; ?></p>
+		<h2 class="card-title"><?=$game->getName()?></h2>
+		<p class="card-text"><?=$game->getDescription()?></p>
 	</div>
 </div>
 
@@ -120,49 +116,49 @@ else
 		</button>
 		<div class="dropdown-menu">
 			<a	class="dropdown-item
-				<?php if($sortby == "downloads") echo "active" ?>"
+				<?php if($sortBy == "downloadCount") echo "active" ?>"
 				href="game?
-				game=<?php echo $id; ?>&
-				query=<?php echo $query; ?>&
-				sortby=downloads">
+				game=<?=$game->getId()?>&
+				<?php if($query != "") echo "query=",$query,"&"; ?>
+				sortBy=downloadCount">
 				Downloads
 			</a>
 			<a	class="dropdown-item
-				<?php if($sortby == "seeders") echo "active" ?>"
+				<?php if($sortBy == "seederCount") echo "active" ?>"
 				href="game?
-				game=<?php echo $id; ?>&
-				query=<?php echo $query; ?>&
-				sortby=seeders">
+				game=<?=$game->getId()?>&
+				<?php if($query != "") echo "query=",$query,"&"; ?>
+				sortBy=seederCount">
 				Seeders
 			</a>
 			<a	class="dropdown-item
-				<?php if($sortby == "updated") echo "active" ?>"
+				<?php if($sortBy == "updateDate") echo "active" ?>"
 				href="game?
-				game=<?php echo $id; ?>&
-				query=<?php echo $query; ?>&
-				sortby=updated">
+				game=<?=$game->getId()?>&
+				<?php if($query != "") echo "query=",$query,"&"; ?>
+				sortBy=updateDate">
 				Updated
 			</a>
 			<a	class="dropdown-item
-				<?php if($sortby == "released") echo "active" ?>"
+				<?php if($sortBy == "releaseDate") echo "active" ?>"
 				href="game?
-				game=<?php echo $id; ?>&
-				query=<?php echo $query; ?>&
-				sortby=released">
+				game=<?=$game->getId()?>&
+				<?php if($query != "") echo "query=",$query,"&"; ?>
+				sortBy=releaseDate">
 				Released
 			</a>
 		</div>
 	</div>
-	<form class="form-inline" action="game.php" method="get">
+	<form class="form-inline" action="game" method="get">
 		<div class="input-group">
+			<input type="hidden" name="game" value="<?=$game->getId()?>"/>
 			<input	type="text"
 					name="query"
 					class="form-control"
-					size="14"
+					size="16"
 					value="<?php if(($query !== "")) echo $query; ?>"
 					placeholder="exact hits please <3">
-			<input type="hidden" name="game" value="<?php echo $id; ?>"/>
-			<input type="hidden" name="sortby" value="<?php echo $sortby; ?>"/>
+			<input type="hidden" name="sortBy" value="<?=$sortBy?>"/>
 			<div class="input-group-append">
 				<button	type="submit"
 					class="btn btn-primary input-group-text">
@@ -173,43 +169,46 @@ else
 	</form>
 </div>
 
-<?php if($modslength > $limit) require 'shared/pagination.php'; ?>
+<?php if($filteredModCount > $limit) require "common/pagination.php"; ?>
 
 <div class="my-4 p-0">
 	<div class="row justify-content-center p-0">
 		<?php
-		$firsttoshow = ($page - 1) * $limit;
-		if(($firsttoshow+$limit) >= ($modslength-($firsttoshow)))
-			$lasttoshow = $modslength;
-		else
-			$lasttoshow = $firsttoshow + $limit;
-		for($i = $firsttoshow; $i < $lasttoshow; $i++)
+		
+		$firstToShow = ($page - 1) * $limit;
+		if(($firstToShow + $limit) >= ($filteredModCount - ($firstToShow)))
 		{
-		?>
-			<a class="item" href="mod?game=<?php echo $id; ?>&mod=<?php echo $i; ?>">
+			$lastToShow = $filteredModCount;
+		}
+		else $lastToShow = $firstToShow + $limit;
+		
+		for($i = $firstToShow; $i < $lastToShow; $i++)
+		{
+			?>
+			<a class="item" href="mod?mod=<?=$i?>">
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<img class="card-img" src="<?php echo $game["mods"][$i]['logo']; ?>"></img>
+					<img class="card-img" src="<?=$filteredModArray[$i]->getLogo()?>"></img>
 					<div class="card-body">
 						<h6 class="card-title">
-							<?php echo $game["mods"][$i]['name']; ?>
+							<?=$filteredModArray[$i]->getName()?>
 						</h6>
 					</div>
 					<div class="card-footer">
 						<small class="text-muted">
-							<?php echo $game["mods"][$i]['downloads']; ?>
+							<?=$filteredModArray[$i]->getDownloadCount()?>
 							downloads, 
-							<?php echo $game["mods"][$i]['seeders']; ?>
+							<?=$filteredModArray[$i]->getSeederCount()?>
 							seeders
 						</small>
 					</div>
 				</div>
 			</a>
-		<?php
+			<?php
 		}
 		?>
 	</div>
 </div>
 
-<?php if($modslength > $limit) require 'shared/pagination.php'; ?>
+<?php if($filteredModCount > $limit) require "common/pagination.php"; ?>
 
-<?php require_once 'shared/bot.php'; ?>
+<?php require_once "common/bot.php"; ?>
