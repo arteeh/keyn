@@ -2,28 +2,32 @@ let colorSchemeQueryList = window.matchMedia('(prefers-color-scheme: dark)');
 
 const setColorScheme = e =>
 {
-	var navtexts = document.getElementsByName("navtext");
+	var dmTextArray = document.getElementsByName("dmText");
 	
 	if (e.matches)
 	{
 		console.log('Dark mode')
-		document.getElementById('stylesheet').href = "css/bootstrap-dark.min.css";
-		document.getElementById('logo').src = "images/logo-400-white.png";
-		for (var i = 0; i<navtexts.length; i++)
+		
+		document.getElementById('dmStylesheet').href =
+			"css/bootstrap-dark.min.css";
+		document.getElementById('dmLogo').src =
+			"images/logo-100-white.webp";
+		
+		for (var i = 0; i < dmTextArray.length; i++)
 		{
-			navtexts[i].classList.remove("text-dark");
-			navtexts[i].classList.add("text-light");
+			dmTextArray[i].classList.remove("text-dark");
+			dmTextArray[i].classList.add("text-light");
 		}
 	}
 	else
 	{
 		console.log('Light mode')
 		document.getElementById('stylesheet').href = "css/bootstrap.min.css";
-		document.getElementById('logo').src = "images/logo-400.png";
-		for (var i = 0; i<navtexts.length; i++)
+		document.getElementById('logo').src = "images/logo-100-black.webp";
+		for (var i = 0; i < dmTextArray.length; i++)
 		{
-			navtexts[i].classList.remove("text-light");
-			navtexts[i].classList.add("text-dark");
+			dmTextArray[i].classList.remove("text-light");
+			dmTextArray[i].classList.add("text-dark");
 		}
 	}
 }

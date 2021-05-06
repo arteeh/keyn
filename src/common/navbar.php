@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-md text-dark">
 	<a class="navbar-brand" href="index">
-		<img id="logo" src="images/logo-400.png" width="30" height="30" class="d-inline-block align-top" alt="">
-		<span name="navtext" class="text-dark">Keyndb</span>
+		<img id="dmLogo" src="images/logo-100-black.webp" width="30"
+			height="30" class="d-inline-block align-top" alt="">
+		<span name="dmText" class="text-dark">Keyndb</span>
 	</a>
 	<button	class="navbar-toggler"
 		type="button"
@@ -12,7 +13,7 @@
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="
+				<a name="dmText" class="nav-link text-dark" href="
 					https://github.com/arteeh/keyn/projects/1">
 					Feature requests
 				</a>
@@ -24,10 +25,14 @@
 		{
 		?>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="login">Log in</a>
+				<a name="dmText" class="nav-link text-dark" href="login">
+					Log in
+				</a>
 			</li>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="register">Register</a>
+				<a name="dmText" class="nav-link text-dark" href="register">
+					Register
+				</a>
 			</li>
 		<?php
 		}
@@ -35,7 +40,7 @@
 		{
 			?>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="uploadmod">Upload</a>
+				<a name="dmText" class="nav-link text-dark" href="uploadmod">Upload</a>
 			</li>
 			<?php
 			// Get username and profile picture
@@ -46,7 +51,7 @@
 			$username = getsingleitem($userdatadir, "username");
 			?>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="profile">
+				<a name="dmText" class="nav-link text-dark" href="profile">
 					<img	src="<?php echo $useravatardir;?>"
 						alt="Your profile picture"
 						width="15"
@@ -55,7 +60,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a name="navtext" class="nav-link text-dark" href="logout?from=<?php echo $_SERVER['REQUEST_URI'];?>">Log out</a>
+				<a name="dmText" class="nav-link text-dark" href="logout?from=<?=$_SERVER['REQUEST_URI']?>">Log out</a>
 			</li>
 		<?php
 		}
