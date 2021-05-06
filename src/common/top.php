@@ -20,5 +20,3 @@ ini_set('display_errors', 1);
 <div class="container-lg">
 
 <?php require_once 'navbar.php'; ?>
-
-<script	src="javascript/darkmode.js"></script>

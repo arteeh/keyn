@@ -6,12 +6,7 @@ class User
 	private $name		= "NO NAME";
 	private $email		= "NO@MAIL.com";
 	private $password	= "NO_PASSWORD_123";
-	private $verified	= 404;
-	
-	public function checkIfExists()
-	{
-		checkIfExists("users",$id);
-	}
+	private $banned		= false;
 	
 	public function load($id)
 	{
@@ -21,40 +16,14 @@ class User
 		$this->name			= $folder["name"];
 		$this->email		= $folder["email"];
 		$this->password		= $folder["password"];
-		$this->verified		= $folder["verified"];
+		
+		if($folder["banned"] == "1") $this->banned = true;
+		else $this->banned = false;
 	}
 	
 	public function save()
 	{
 		
-	}
-	
-	public function verify($token)
-	{
-		$retVal;
-		
-		// SHA256 hash the username and compare to the token to see if its all good
-		$compareToken = hash('sha256', $name);
-		
-		if(hash_equals($token, $compareToken))
-		{
-			switch($verified)
-			{
-				// Not yet verified, so verify
-				case 0:
-					$verified = 1;
-					$this->save();
-					$retVal = 0;
-				// Has already been verified
-				case 1:
-					$retVal = 1;
-				// Object Hasn't been loaded yet
-				case 404:
-					$retVal = 404;
-			}
-		}
-		
-		return $retval;
 	}
 }
 

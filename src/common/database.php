@@ -2,8 +2,10 @@
 
 include_once "objects/Game.php";
 include_once "objects/Mod.php";
+include_once "objects/Torrent.php";
+include_once "objects/Version.php";
 
-$directory = "database";
+$directory = "/database";
 
 function load($object,$id)
 {

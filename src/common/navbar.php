@@ -25,12 +25,12 @@
 		{
 		?>
 			<li class="nav-item">
-				<a name="dmText" class="nav-link text-dark" href="login">
+				<a name="dmText" class="nav-link text-dark" href="user-login">
 					Log in
 				</a>
 			</li>
 			<li class="nav-item">
-				<a name="dmText" class="nav-link text-dark" href="register">
+				<a name="dmText" class="nav-link text-dark" href="user-create">
 					Register
 				</a>
 			</li>
@@ -40,7 +40,7 @@
 		{
 			?>
 			<li class="nav-item">
-				<a name="dmText" class="nav-link text-dark" href="uploadmod">Upload</a>
+				<a name="dmText" class="nav-link text-dark" href="mod-create">Upload</a>
 			</li>
 			<?php
 			// Get username and profile picture
@@ -51,7 +51,7 @@
 			$username = getsingleitem($userdatadir, "username");
 			?>
 			<li class="nav-item">
-				<a name="dmText" class="nav-link text-dark" href="profile">
+				<a name="dmText" class="nav-link text-dark" href="user">
 					<img	src="<?php echo $useravatardir;?>"
 						alt="Your profile picture"
 						width="15"
@@ -60,7 +60,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a name="dmText" class="nav-link text-dark" href="logout?from=<?=$_SERVER['REQUEST_URI']?>">Log out</a>
+				<a name="dmText" class="nav-link text-dark" href="user-logout?from=<?=$_SERVER['REQUEST_URI']?>">Log out</a>
 			</li>
 		<?php
 		}

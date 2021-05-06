@@ -7,16 +7,16 @@ class Mod
 	private $id				= 404;
 	private $name			= "NO NAME";
 	private $description	= "NO DESCRIPTION";
-	private $logo			= "2.webp";
-	private $banner			= "3.webp";
 	private $downloadCount	= 404;
 	private $seederCount	= 404;
 	private $leecherCount	= 404;
 	private $releaseDate	= 404;
 	private $updateDate		= 404;
-	
+	private $logo			= "2.webp";
+	private $banner			= "3.webp";	
 	
 	public function getGame()			{ return $this->game; }
+	public function getTorrentArray()	{ return $this->torrentArray; }
 	public function getId()				{ return $this->id; }
 	public function getName()			{ return $this->name; }
 	public function getDescription()	{ return $this->description; }
@@ -65,7 +65,6 @@ class Mod
 	{
 		$folder = load("mods",$id);
 		
-		$this->game				= new Game();
 		$this->id				= $id;
 		$this->name				= $folder["name"];
 		$this->description		= $folder["description"];
@@ -77,6 +76,7 @@ class Mod
 		$this->releaseDate		= $folder["releaseDate"];
 		$this->updateDate		= $folder["updateDate"];
 		
+		$this->game				= new Game();
 		$this->game->load($folder["gameId"]);
 	}
 	
