@@ -1,37 +1,34 @@
 <?php
 
-include_once "shared/database.php";
+include_once "common/database.php";
 
-$gameid = $_GET['game'];
-checkGame($gameid);
+checkIfExists("mods",$_GET['id']);
 
-$id = $_GET['mod'];
-checkMod($gameid,$id);
+include_once "common/top.php";
 
-include_once "shared/top.php";
-
-$game = getFolderR("games/$gameid",1);
-$mod = getFolderR("games/$gameid/mods/$id",5);
+$mod = new Mod();
+$mod->load($_GET['id']);
+echo $mod->toString();
 
 ?>
 
 <div class="btn-toolbar justify-content-between my-4" role="toolbar">
-	<a href="game.php?game=<?php echo $gameid; ?>" type="button" class="btn btn-primary">
-		Back to <?php echo $game['name']; ?>
+	<a href="game.php?id=<?=$mod->getGame()->getId()?>" type="button" class="btn btn-primary">
+		Back to <?=$mod->getGame()->getName()?>
 	</a>
 	<span class="my-auto">
-		Downloads: <?php echo $mod['downloads']; ?>
+		Downloads: <?=$mod->getDownloadCount()?>
 		&nbsp
-		Seeders: <?php echo $mod['seeders']; ?>
+		Seeders: <?=$mod->getSeederCount()?>
 		&nbsp
-		Leechers: <?php echo $mod['leechers']; ?>
+		Leechers: <?=$mod->getLeecherCount()?>
 	</span>
 </div>
 
 <div class="card bg-light text-white my-4">
-	<img class="card-img" src="<?php echo $mod['banner']; ?>" alt="Game banner image">
+	<img class="card-img" src="<?=$mod->getBanner()?>" alt="Game banner image">
 	<div class="card-img-overlay text-shadow">
-		<h2 class="card-title"><?php echo $mod['name']; ?></h2>
+		<h2 class="card-title"><?=$mod->getName()?></h2>
 	</div>
 </div>
 
@@ -60,7 +57,7 @@ $mod = getFolderR("games/$gameid/mods/$id",5);
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane fade border rounded-bottom border-top-0 p-3 show active" id="description" role="tabpanel">
-			<?php echo $mod["description"];?>
+			<?=$mod->getDescription()?>
 		</div>
 		<div class="tab-pane fade border rounded-bottom border-top-0 p-3" id="downloads" role="tabpanel">
 			<?php

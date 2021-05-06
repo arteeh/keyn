@@ -47,7 +47,7 @@ class Game
 				$m = new Mod();
 				$m->load($id);
 				
-				if(intval($m->getGameId()) == intval($this->id))
+				if(intval($m->getGame()->getId()) == intval($this->id))
 				{
 					array_push($this->modArray,$m);
 				}

@@ -27,7 +27,7 @@ $gameArray = sortObjectArray($gameArray,"downloadCount",true);
 		for($i = 0; $i < $gameArrayCount; $i++)
 		{
 			?>
-			<a class="item" href="game?game=<?=$i?>" >
+			<a class="item" href="game?id=<?=$i?>" >
 				<div class="card text-dark m-1" style="width: 11.5rem;">
 					<img class="card-img-top img-fluid" src="<?=$gameArray[$i]->getLogo()?>" alt="Game logo">
 					<div class="card-body">

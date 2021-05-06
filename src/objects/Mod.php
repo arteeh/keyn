@@ -3,6 +3,7 @@
 class Mod
 {
 	private $game;
+	private $torrentArray	= array();
 	private $id				= 404;
 	private $name			= "NO NAME";
 	private $description	= "NO DESCRIPTION";
@@ -14,7 +15,8 @@ class Mod
 	private $releaseDate	= 404;
 	private $updateDate		= 404;
 	
-	public function getGameId()			{ return $this->game->getId(); }
+	
+	public function getGame()			{ return $this->game; }
 	public function getId()				{ return $this->id; }
 	public function getName()			{ return $this->name; }
 	public function getDescription()	{ return $this->description; }
@@ -34,6 +36,29 @@ class Mod
 		$retVal = $GLOBALS['directory'];
 		$retVal .= "/files/media/$this->banner";
 		return $retVal;
+	}
+	
+	public function loadTorrentArray()
+	{
+		$torrentPath = $GLOBALS['directory'];
+		$torrentPath .= "/objects/torrents";
+		$torrentOpenDir = opendir($torrentPath);
+		
+		while(($torrentId = readdir($torrentOpenDir)) !== false)
+		{
+			if(!is_dir($torrentId))
+			{
+				$t = new Torrent();
+				$t->load($torrentId);
+				
+				if(intval($t->getMod()->getId()) == intval($this->id))
+				{
+					array_push($this->torrentArray,$t);
+				}
+			}
+		}
+		
+		closedir($torrentOpenDir);
 	}
 	
 	public function load($id)
@@ -63,6 +88,10 @@ class Mod
 	public function toString()
 	{
 		$string = "<br>Mod:<br>";
+		
+		$string .= "game id: ";
+		$string .= $this->game->getId();
+		$string .= "<br>";
 		
 		$string .= "id: ";
 		$string .= $this->id;

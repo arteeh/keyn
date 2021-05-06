@@ -2,12 +2,12 @@
 
 include_once "common/database.php";
 
-//checkIfExists("games",$_GET['game']);
+checkIfExists("games",$_GET['id']);
 
 include_once "common/top.php";
 
 $game = new Game();
-$game->load($_GET['game']);
+$game->load($_GET['id']);
 $game->loadModArray();
 
 $filteredModArray = array();
@@ -43,7 +43,8 @@ $filteredModArray = sortObjectArray($filteredModArray,$sortBy,true);
 // Pagination
 
 $limit = 20;
-// How may adjacent page links should be shown on each side of the current page link.
+// How may adjacent page links should be
+// shown on each side of the current page link.
 $adjacents = 1;
 $totalPages = ceil($filteredModCount / $limit);
 
@@ -118,7 +119,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortBy == "downloadCount") echo "active" ?>"
 				href="game?
-				game=<?=$game->getId()?>&
+				id=<?=$game->getId()?>&
 				<?php if($query != "") echo "query=",$query,"&"; ?>
 				sortBy=downloadCount">
 				Downloads
@@ -126,7 +127,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortBy == "seederCount") echo "active" ?>"
 				href="game?
-				game=<?=$game->getId()?>&
+				id=<?=$game->getId()?>&
 				<?php if($query != "") echo "query=",$query,"&"; ?>
 				sortBy=seederCount">
 				Seeders
@@ -134,7 +135,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortBy == "updateDate") echo "active" ?>"
 				href="game?
-				game=<?=$game->getId()?>&
+				id=<?=$game->getId()?>&
 				<?php if($query != "") echo "query=",$query,"&"; ?>
 				sortBy=updateDate">
 				Updated
@@ -142,7 +143,7 @@ else
 			<a	class="dropdown-item
 				<?php if($sortBy == "releaseDate") echo "active" ?>"
 				href="game?
-				game=<?=$game->getId()?>&
+				id=<?=$game->getId()?>&
 				<?php if($query != "") echo "query=",$query,"&"; ?>
 				sortBy=releaseDate">
 				Released
@@ -151,7 +152,7 @@ else
 	</div>
 	<form class="form-inline" action="game" method="get">
 		<div class="input-group">
-			<input type="hidden" name="game" value="<?=$game->getId()?>"/>
+			<input type="hidden" name="id" value="<?=$game->getId()?>"/>
 			<input	type="text"
 					name="query"
 					class="form-control"
@@ -185,9 +186,12 @@ else
 		for($i = $firstToShow; $i < $lastToShow; $i++)
 		{
 			?>
-			<a class="item" href="mod?mod=<?=$i?>">
+			<a class="item" href="mod?id=<?=$i?>">
 				<div class="card text-dark m-1" style="width: 11.5rem;">
-					<img class="card-img" src="<?=$filteredModArray[$i]->getLogo()?>"></img>
+					<img
+						class="card-img"
+						src="<?=$filteredModArray[$i]->getLogo()?>">
+					</img>
 					<div class="card-body">
 						<h6 class="card-title">
 							<?=$filteredModArray[$i]->getName()?>
