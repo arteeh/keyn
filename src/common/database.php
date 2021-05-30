@@ -4,8 +4,9 @@ include_once "objects/Game.php";
 include_once "objects/Mod.php";
 include_once "objects/Torrent.php";
 include_once "objects/Version.php";
+include_once "objects/User.php";
 
-$directory = "/database";
+$directory = "database";
 
 function load($object,$id)
 {
@@ -21,9 +22,7 @@ function load($object,$id)
 			$filepath = "$dir/$filename";
 			if ($filename != "." && $filename != "..")
 			{
-				$file = fopen($filepath,"r");
-				$folder["$filename"] = fread($file,filesize($filepath));
-				fclose($file);
+				$folder["$filename"] = file_get_contents($filepath);
 			}
 		}
 	}
