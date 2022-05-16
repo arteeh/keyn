@@ -7,9 +7,4 @@
 			</a>
 		</p>
 	</div>
-	<div class="col-12 col-md">
-		<small class="d-block mb-3 text-muted">
-			© 2020 Maarten de Jong
-		</small>
-	</div>
 </footer>
