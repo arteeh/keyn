@@ -1,0 +1,7 @@
+services:
+  keyn:
+    image: keyn:dev
+    container_name: keyn
+    ports:
+      - 8080:80
+    build: Keyn
