@@ -1,7 +1,67 @@
+name: "keyn"
+
 services:
+
   keyn:
     image: keyn:dev
     container_name: keyn
+    networks:
+      - keyn_network
     ports:
-      - 8080:80
+      - 8098:80
     build: Keyn
+
+  directus:
+    image: directus/directus
+    container_name: directus
+    networks:
+      - keyn_network
+    ports:
+      - 8099:8055
+    volumes:
+      - uploads:/directus/uploads
+    depends_on:
+      - redis
+      - postgis
+    environment:
+      KEY: "RWdkoQ4JBgL6hbcbjiNY"
+      SECRET: "K9fjzcqSxeGkRw2hM7zq"
+      ADMIN_EMAIL: "me@arteeh.com"
+      ADMIN_PASSWORD: "iJ8YrfuYyUvr2znffvKZ"
+      CACHE_ENABLED: "true"
+      CACHE_STORE: "redis"
+      REDIS: "redis://redis:6379"
+      DB_CLIENT: "pg"
+      DB_HOST: "postgis"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "directus"
+      DB_PASSWORD: "PvPiQcwC5ynnoaMwijJv"
+      # Make sure to set this in production
+      # (see https://docs.directus.io/self-hosted/config-options#general)
+      # PUBLIC_URL: "https://directus.example.com"
+
+  redis:
+    image: redis
+    container_name: redis
+    networks:
+      - keyn_network
+  
+  postgis:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: postgis
+    networks:
+      - keyn_network
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "directus"
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "PvPiQcwC5ynnoaMwijJv"
+
+networks:
+  keyn_network:
+
+volumes:
+  database:
+  uploads:
