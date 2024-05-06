@@ -9,8 +9,8 @@ services:
         expose:
             - 80
         volumes:
-            - /home/arteeh/keyn/src:/var/www/html
-            - /home/arteeh/keyn/keyn.conf:/etc/nginx/conf.d/default.conf
+            - ./src:/var/www/html
+            - ./keyn.conf:/etc/nginx/conf.d/default.conf
 
     keyn-php:
         image: php:fpm
