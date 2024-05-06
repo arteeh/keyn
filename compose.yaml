@@ -1,0 +1,27 @@
+services:
+
+    keyn:
+        image: nginx
+        container_name: keyn
+        restart: unless-stopped
+        networks:
+            - keynnet
+        expose:
+            - 80
+        volumes:
+            - /home/arteeh/keyn/src:/var/www/html
+            - /home/arteeh/keyn/keyn.conf:/etc/nginx/conf.d/default.conf
+
+    keyn-php:
+        image: php:fpm
+        container_name: keyn-php
+        restart: unless-stopped
+        networks:
+            - keynnet
+        volumes:
+            - ./src:/var/www/html
+
+networks:
+
+    keynnet:
+        name: keynnet
