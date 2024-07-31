@@ -2,6 +2,6 @@
 
 #### A mod hosting site based on torrenting
 
-### Other stuff
+dotnet new blazorwasm --name Keyn.Web -o Keyn/Web --pwa --no-https
 
-Uses https://github.com/ForEvolve/bootstrap-dark
+https://realfavicongenerator.net/

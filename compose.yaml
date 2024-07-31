@@ -6,7 +6,7 @@ services:
     image: keyn:dev
     container_name: keyn
     networks:
-      - keyn_network
+      - fe
     ports:
       - 8098:80
     build: Keyn
@@ -15,7 +15,8 @@ services:
     image: directus/directus
     container_name: directus
     networks:
-      - keyn_network
+      - fe
+      - be
     ports:
       - 8099:8055
     volumes:
@@ -45,13 +46,13 @@ services:
     image: redis
     container_name: redis
     networks:
-      - keyn_network
+      - be
   
   postgis:
     image: postgis/postgis:16-3.4-alpine
     container_name: postgis
     networks:
-      - keyn_network
+      - be
     volumes:
       - database:/var/lib/postgresql/data
     environment:
@@ -60,8 +61,11 @@ services:
       POSTGRES_PASSWORD: "PvPiQcwC5ynnoaMwijJv"
 
 networks:
-  keyn_network:
+
+  fe:
+  be:
 
 volumes:
+
   database:
   uploads:
