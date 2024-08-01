@@ -1,0 +1,42 @@
+// Docs: https://dbml.dbdiagram.io/docs
+
+Project project_name {
+    database_type: 'PostgreSQL'
+    Note: 'Keyn'
+}
+
+Table Games {
+  Id integer
+  Pages integer [ref: < Pages.Id]
+  Boards integer [ref: - Boards.Id] // if null, do general
+}
+
+Table Pages {
+  Id integer
+  Authors integer [ref: <> Users.Id]
+  Mods integer [ref: < Mods.Id]
+}
+
+Table Mods {
+  Id integer
+  Versions integer [ref: < Versions.Id]
+}
+
+Table Versions {
+	Id integer
+}
+
+// Directus built-in
+Table Users {
+  Id integer 
+}
+
+Table Boards {
+	Id integer
+	Posts integer [ref: < Posts.Id]
+}
+
+Table Posts {
+	Id integer
+	User integer [ref: - Users.Id]
+}
