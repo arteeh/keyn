@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyn", "Keyn\Keyn.csproj", "{2CD5E282-5644-47AE-82A8-2B8C15A3EE81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyn", "Keyn\Keyn.csproj", "{51C1C2B4-9629-4D7D-B8E6-592EB1D1AC73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyn.Components", "Keyn.Components\Keyn.Components.csproj", "{8BCD7D99-D817-4789-9D52-4DB0B6E3B8C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2CD5E282-5644-47AE-82A8-2B8C15A3EE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CD5E282-5644-47AE-82A8-2B8C15A3EE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CD5E282-5644-47AE-82A8-2B8C15A3EE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CD5E282-5644-47AE-82A8-2B8C15A3EE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C1C2B4-9629-4D7D-B8E6-592EB1D1AC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C1C2B4-9629-4D7D-B8E6-592EB1D1AC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C1C2B4-9629-4D7D-B8E6-592EB1D1AC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C1C2B4-9629-4D7D-B8E6-592EB1D1AC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCD7D99-D817-4789-9D52-4DB0B6E3B8C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCD7D99-D817-4789-9D52-4DB0B6E3B8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCD7D99-D817-4789-9D52-4DB0B6E3B8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCD7D99-D817-4789-9D52-4DB0B6E3B8C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

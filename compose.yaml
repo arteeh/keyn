@@ -48,7 +48,7 @@ services:
       - keyn_network
   
   postgis:
-    image: postgis/postgis:16-3.4-alpine
+    image: postgis/postgis
     container_name: postgis
     networks:
       - keyn_network
